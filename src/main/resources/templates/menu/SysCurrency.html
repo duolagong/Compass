@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" id="sysCurrency">
+            <div class="nicescroll-bar">
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">功能维护</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">币种维护</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                        <div class="hk-pg-header">
+                            <h3 class="hk-pg-title">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-jpy fa-stack-1x"></i>
+                                </span>
+                                系统币种维护
+                            </h3>
+                        </div>
+                    <section class="hk-sec-wrapper">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <!--<p class="mb-40">修改支付通目标地址</p>-->
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <!--<div id="sysCurrency_toolbar">
+                                            <button id="sysCurrency_btn" type="button" class="btn btn-outline-success">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                新增币种
+                                            </button>
+                                        </div>-->
+                                        <table id="sysCurrency_table" class="table mb-0"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function() {
+                $('#sysCurrency #sysCurrency_table').bootstrapTable({
+                    url: '/sysCurrency',
+                    method: 'get',
+                    toolbar: '#sysCurrency_toolbar',
+                    clickEdit: true,
+                    pagination: true,
+                    pageSize: 10,
+                    pageList: [10, 25],
+                    showColumns: true,
+                    showPaginationSwitch: false,
+                    showRefresh: true,
+                    clickToSelect: true,  //点击row选中radio或CheckBox
+                    checkbox: true,
+                    search: true,
+                    singleSelect: true,
+                    showToggle: true,
+                    columns: [{
+                        checkbox: true
+                    }, {
+                        field: 'agentid',
+                        title: '银行编号',
+                        sortable:"true",
+                        width: 100,
+                        align : 'center'
+                    }, {
+                        field: 'curcode',
+                        title: '系统币种',
+                        width: 100,
+                        align : 'center'
+                    }, {
+                        field: 'bankcurcode',
+                        title: '银行币种',
+                        width: 100,
+                        align : 'center'
+                    }]
+                });
+            });
+        </script>
+    </body>
+</html>

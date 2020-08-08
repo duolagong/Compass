@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+            <div class="hk-wrapper hk-alt-nav" id="alertRule">
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">系统设置</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">预警规则</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                    <div class="hk-pg-header">
+                        <h2 class="hk-pg-title">
+                            <button class="btn btn-icon btn-icon-circle btn-warning btn-icon-style-3" type="button" data-toggle="collapse" data-target="#alertRule_collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <span class="btn-icon-wrap"><i class="fa fa-user-md fa-2x"></i></span>
+                            </button>&nbsp预警规则
+                        </h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="collapse" id="alertRule_collapseExample">
+                                        <div class="card card-body">
+                                            配置系统预警规则： 触顶临界点阈值系统将开始预警，临界点以分钟为单位<br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <section class="hk-sec-wrapper">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <div id="alertRule_toolbar">
+                                            <button id="btn_add" type="button" class="btn btn-gradient-success" data-toggle="modal">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp新增
+                                            </button>
+                                        </div>
+                                        <table id="alertRule_table" class="table mb-0"></table>
+                                    </div>
+                                </div>
+                                <!-- 模态框 -->
+                                <div class="modal fade" id="alertRule_addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width:200%;">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">新增规则</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="addform" class="was-validated">
+                                                    <div class="form-group">
+                                                        <label for="type_add" class="control-label">系统类型:</label>
+                                                        <input type="text" class="form-control" id="type_add" name="type_add" required>
+                                                        <label for="typeName_add" class="control-label">类型名称:</label>
+                                                        <input type="text" class="form-control" id="typeName_add" name="typeName_add" required>
+                                                        <label for="rule_add" class="control-label">临界点:</label>
+                                                        <input type="text" class="form-control" id="rule_add" name="rule_add" required>
+                                                        <label for="operate_add" class="control-label">预警操作:</label>
+                                                        <select class="form-control custom-select" id="operate_add">
+                                                            <option value='1'>短信预警</option>
+                                                            <option value="2">微信预警</option>
+                                                            <option value="0">不预警</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <span id="returnMessage" class="glyphicon"> </span>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="button" class="btn btn-primary" id="addModal-footer-add">确定</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="alertRule_upModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width:200%;">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">规则修改</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" id="id_up" name="id_up" hidden>
+                                                        <label for="type_up" class="control-label">系统类型:</label>
+                                                        <input type="text" class="form-control" id="type_up" name="type_up" readOnly="true">
+                                                        <label for="typeName_up" class="control-label">类型名称:</label>
+                                                        <input type="text" class="form-control" id="typeName_up" name="typeName_up">
+                                                        <label for="rule_up" class="control-label">临界点:</label>
+                                                        <input type="text" class="form-control" id="rule_up" name="rule_up">
+                                                        <label for="operate_up" class="control-label">预警操作:</label>
+                                                        <select class="form-control custom-select" id="operate_up">
+                                                            <option value='1'>短信预警</option>
+                                                            <option value="2">微信预警</option>
+                                                            <option value="0">不预警</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <span class="glyphicon"></span>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="button" class="btn btn-primary" id="updateModal-footer-up">确定</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <script type="text/javascript" src="js/AlertRule/AlertRule.js"></script>
+            <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+        <!--</section>-->
+    </body>
+</html>

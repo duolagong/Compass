@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="loading">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="tradeAnalysis">
+            <div class="nicescroll-bar">
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">系统监控</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">汇款时段</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="container-fluid">
+                <div class="hk-pg-header">
+                    <h3 class="hk-pg-title">
+                        <button id ="tradeAnalysisHide" class="btn btn-icon btn-icon-circle btn-warning btn-icon-style-3" type="button" data-toggle="collapse" data-target="#user_collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="btn-icon-wrap"><i class="fa fa-bar-chart fa-2x"></i></span>
+                        </button>&nbsp汇款时段分布
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="collapse" id="user_collapseExample">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">汇款日期</span>
+                                        </div>
+                                        <input class="form-control" type="text" name="daterange" id="inputSingleDate"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button id="tradeAnalysis_btn_get" class="btn btn-gradient-success" type="button">
+                                        <i class="fa fa-bar-chart fa-1x"></i>&nbsp确认展示
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="tradeAnalysisChat">
+                    <div class="col-xl-12 pa-0">
+                        <!--<div id="123"></div>-->
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <script type="text/javascript">
+                /*$("#loading").fadeOut(3000);*/
+            </script>
+        </div>
+        <script src="js/Monitor/TradeAnalysis.js"></script>
+    </body>
+</html>

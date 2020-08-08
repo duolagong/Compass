@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+            <div class="hk-pg-wrapper">
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">工具箱</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">消息发送器</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                    <section class="hk-sec-wrapper">
+                        <div class="hk-pg-header">
+                            <h5 class="hk-pg-title">设置参数</h5>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="spanType">消息格式</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputTypr">
+                                                    <option value="1">HTTP</option>
+                                                    <option value="2">JMS</option>
+                                                    <option value="3">Netty</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">目标系统</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputVersion" >
+                                                    <option value="">全部</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">报文格式</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputAgentid">
+                                                    <option value="1">XML</option>
+                                                    <option value="2">JSON</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易类型</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputTxCode">
+                                                    <option value="">全部</option>
+                                                    <option value="1000">资金普通付款</option>
+                                                    <option value="2000">资金监控付款</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="hk-sec-wrapper">
+                        <div class="form-row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="20" id="leftArea" style="background-color:#d1d1d1;"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <center>
+                                    <button class="btn btn-dark btn-wth-icon icon-wthot-bg btn-rounded icon-right btn-lg" style="top:20px;" id="fButton">
+                                        <span class="btn-text">消息转换</span>
+                                        <span class="icon-label"><span class="feather-icon">
+                                            <i data-feather="arrow-right"></i></span> </span>
+                                    </button>
+                                </center>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="20" id="rightArea"
+                                              style="background-color:#d1d1d1;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <script type="text/javascript">
+                $('#fButton').on('click',function () {
+                    var leftArea = $("#leftArea").val();
+                    if(leftArea ==null || leftArea ==""){
+                        alert("请填写转换内容！")
+                        return false;
+                    }
+                    var inputTypr = $("#inputTypr").val();
+                    $.ajax({
+                        type : "POST",
+                        dataType : "json",
+                        url : "/formatCon",
+                        contentType: "application/json",
+                        data : JSON.stringify({inputTypr : inputTypr,leftArea : leftArea}),
+                        success : function(result) {
+                            console.log(result)
+                            $('#rightArea').val(result.Msg);
+                        }
+                    });
+                })
+            </script>
+            <!--<script type="text/javascript" src="dist/js/init.js"></script>
+        </section>-->
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>HomeHead</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="/css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+		<link href="/css/style.css" rel='stylesheet' type='text/css'/>
+		<link href="/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="/css/icon-font.min.css" type='text/css'/>
+		<script src="/js/Chart.js"></script>
+		<link href="/css/animate.css" rel="stylesheet" type="text/css" media="all">
+		<script src="/js/wow.min.js"></script>
+		<script src="/js/jquery/jquery-2.1.1.min.js"></script>
+		<style type="text/css">
+			html { overflow: hidden;}
+		</style>
+	</head>
+ <body class="sticky-header left-side-collapsed">
+    <section>
+		<div class="main-content" id="HomeHead">
+			<div class="header-section">
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-th-list"></i></a>
+			<div class="menu-right">
+				<div class="user-panel-top">  	
+					<div class="profile_details_left">
+						<ul class="nofitications-dropdown">		   							   		
+							<div class="clearfix"></div>	
+						</ul>
+					</div>
+					<div class="profile_details">		
+						<ul>
+							<li class="dropdown profile_details_drop">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<div class="profile_img">
+										 <div class="user-name">
+											<p>ChenShiWen<span>Administrator</span></p>
+										 </div>
+										 <i class="lnr lnr-chevron-down"></i>
+										 <i class="lnr lnr-chevron-up"></i>
+										<div class="clearfix"></div>	
+									</div>	
+								</a>
+								<ul class="dropdown-menu drp-mnu">
+									<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
+									<li> <a href="#"><i class="fa fa-user"></i>Profile</a> </li> 
+									<li> <a href="sign-up.html"><i class="fa fa-sign-out"></i> Logout</a> </li>
+								</ul>
+							</li>
+							<div class="clearfix"> </div>
+						</ul>
+					</div>		          	
+					<div class="clearfix"></div>
+				</div>
+			  </div>
+			</div>
+			<div class="left-side sticky-left-side">
+				<div class="logo">
+					<h5><a href="/Monitor"><i class="fa fa-globe fa-spin fa-3x fa-fw" aria-hidden="true"></i>DispatchCore</a></h5>
+				</div>
+				<div class="logo-icon text-center">
+					<a href="/Monitor"><i class="lnr lnr-home"></i> </a>
+				</div>
+				<div class="left-side-inner">
+					<ul class="nav nav-pills nav-stacked custom-nav">
+						<li><a href="/PlanRule" id='1'><i class="fa fa-clock-o" aria-hidden="true"></i><span>任务配置</span></a></li>
+						<li><a href="#0" id='2'><i class="fa fa-bell-o" aria-hidden="true"></i> <span>系统监控</span></a></li>
+						<li class="menu-list"><a href="#"><i class="lnr lnr-magic-wand"></i> <span>银行信息配置</span></a>
+							<ul class="sub-menu-list">
+								<li><a href="#0" id='AutoRule' onclick='ajaxf(id)'>自动任务配置</a></li>
+								<li><a href="#0" id='Analysis' onclick='ajaxf(id)'>关系网注册中心</a></li>
+								<li><a href="#0" id='BankAlert' onclick='ajaxf(id)'>银行前置机</a></li>
+							</ul>
+						</li>
+						<li class="menu-list"><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> <span>银行信息配置</span></a>
+							<ul class="sub-menu-list">
+								<li><a a href="#0" id='3' onclick='ajaxf(id)'>银行账户权限</a> </li>
+								<li><a a href="#0" id='MxContent' onclick='ajaxf(id)'>银行账户明细</a> </li>
+								<li><a a href="#0" id='Balance' onclick='ajaxf(id)'>银行账户余额</a></li>
+							</ul>
+						</li>
+						<li class="menu-list"><a href="#"><i class="lnr lnr-indent-increase"></i> <span>系统工具</span></a>
+							<ul class="sub-menu-list">
+								<li><a href="#0" id='4' onclick='ajaxf(id)'>加密转换</a></li>
+								<li><a href="#0" id='5' onclick='ajaxf(id)'>系统报文</a></li>
+								<li><a href="#0" id='6' onclick='ajaxf(id)'>测试发送</a></li>
+							</ul>
+						</li>
+						<li class="menu-list"><a href="#"><i class="lnr lnr-book"></i><span>业务数据分析</span></a>
+							<ul class="sub-menu-list">
+								<li><a href="#0" id='7' onclick='ajaxf(id)'>交易分析</a> </li>
+								<li><a href="#0" id='8' onclick='ajaxf(id)'>地区付款分析</a></li>
+								<li><a href="#0" id='TransactionBank' onclick='ajaxf(id)'>交易访问量分析</a></li>
+							</ul>
+						</li>
+						<li><a href="#0" id='DutiesDispatch' onclick='ajaxf(id)'><i class="lnr lnr-pencil"></i> <span>系统配置</span></a>
+							<ul class="sub-menu-list">
+								<li><a href="#0" id='TradeAnalysis' onclick='ajaxf(id)'>系统设置</a> </li>
+								<li><a href="#0" id='9' onclick='ajaxf(id)'>操作员维护</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+<!--		<iframe border="0" id="content" src="/menu/Monitor.html" height="100%" width="100%" id="frame_full" frameborder="0" scrolling="auto"></iframe>-->
+<!--			<div th:insert="~{menu/Monitor::#HomeMonitor}"></div>-->
+		</div>
+   </section>
+<!--<script type="text/javascript">-->
+<!--	var iframeHeight=Function(){-->
+<!--		var _height=$(window).height()-50;-->
+<!--		$('#content').height(_height);-->
+<!--	}-->
+<!--	window.onresize=iframeHeight;-->
+<!--	$(Function(){-->
+<!--		iframeHeight();-->
+<!--	});-->
+<!--	Function ajaxf(id){-->
+<!--		    $('iframe').attr('src',id+".do");-->
+<!--		}-->
+<!--</script>-->
+<script src="/js/jquery.nicescroll.js"></script>
+<script src="/js/scripts.js"></script>
+<script src="/js/bootstrap/popper.min.js"></script>
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+</body>
+</html>

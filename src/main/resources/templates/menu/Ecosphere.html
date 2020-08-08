@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" href="css/radio.css" type='text/css'/>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+    </head>
+<body>
+    <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+    <div class="hk-wrapper hk-alt-nav" id="ecosphere">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">系统监控</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">&nbsp生态网</li>
+                </ol>
+            </nav>
+            <div class="container">
+<!--            <section class="hk-sec-wrapper">-->
+                <div class="hk-pg-header">
+                    <h2 class="hk-pg-title"><i class="fa fa-globe"></i>&nbsp生态网</h2>
+                </div>
+                <div class="row">
+                    <div class="col-sm-9">
+                        <section class="hk-sec-wrapper " id ="RadarMap">
+                        </section>
+                        <div class="radar"></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <section class="hk-sec-wrapper"><!--style="height: 507px;"-->
+                            <h6 class="mt-30 mb-5">生态监控</h6>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="16" id="message" readOnly="true"></textarea>
+                            </div>
+                            <!--<div class="toggle-wrap">
+                                <h6 class="mt-30 mb-5">开启监控</h6>
+                                <div class="toggle toggle-lg toggle-light toggle-bg-green toggle4"></div>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">剩余时长</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="0s" aria-describedby id="timeOut">
+                            </div>-->
+                            <!--<h1 id="djs">倒计时：<span>10</span></h1>-->
+                        </section>
+                    </div>
+                </div>
+                <section class="hk-sec-wrapper">
+                    <table id="ecosphere_table" class="table mb-0"></table>
+                </section>
+            </div>
+        </div>
+    <!--</section>-->
+    <!--<section th:replace="common/JS::common_js(~{::script})">-->
+        <!--<script type="text/javascript">
+            $(document).ready(function(){
+                var e = $("h1 span").first();
+                var i = 9;
+                var interval = setInterval(function(){
+                    e.html(i);
+                    i&#45;&#45;;
+                    if(i <= 0){
+                        clearInterval(interval);
+                    }
+                },1000);
+            })
+        </script>-->
+        <!--<script type="text/javascript" src="vendors/echarts/dist/echarts.min.js"></script>-->
+        <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+        <script src="js/Ecosphere/topology.js"></script>
+    <!--</section>-->
+</body>
+</html>

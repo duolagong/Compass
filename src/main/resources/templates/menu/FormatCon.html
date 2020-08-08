@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    </head>
+<body>
+    <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="FormatCon">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">工具箱</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">格式转换</li>
+                </ol>
+            </nav>
+            <div class="container-fluid">
+                <section class="hk-sec-wrapper">
+                    <div class="hk-pg-header">
+                        <h4 class="hk-pg-title">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-american-sign-language-interpreting fa-stack-1x"></i>
+                            </span>格式转换
+                        </h4>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="spanType">转换类型</span>
+                                </div>
+                                <select class="form-control custom-select" aria-describedby id="inputTypr">
+                                    <option value="1">XML格式化</option>
+                                    <option value="2">报文解密</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="hk-sec-wrapper">
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="20" id="leftArea" style="background-color:#d1d1d1;"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <center>
+                                <button class="btn btn-dark btn-wth-icon icon-wthot-bg btn-rounded icon-right btn-lg" style="top:20px;" id="fButton">
+                                    <span class="btn-text">消息转换</span>
+                                    <span class="icon-label">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </span>
+                                </button>
+                            </center>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="20" id="rightArea"
+                                          style="background-color:#d1d1d1;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    <!--</section>-->
+    <!--<section th:replace="common/JS::common_js(~{::script})">-->
+        <script type="text/javascript">
+            $('#fButton').on('click',function () {
+                var leftArea = $("#leftArea").val();
+                if(leftArea ==null || leftArea ==""){
+                    alert("请填写转换内容！")
+                    return false;
+                }
+                var inputTypr = $("#inputTypr").val();
+                $.ajax({
+                    type : "POST",
+                    dataType : "json",
+                    url : "/formatCon",
+                    contentType: "application/json",
+                    data : JSON.stringify({inputTypr : inputTypr,leftArea : leftArea}),
+                    success : function(result) {
+                        console.log(result)
+                        $('#rightArea').val(result.Msg);
+                    }
+                });
+            })
+        </script>
+    <!--</section>-->
+</body>
+</html>

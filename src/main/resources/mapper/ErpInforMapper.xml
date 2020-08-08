@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.programme.Fortress.Function.Business.dao.ErpInforMapper">
+
+    <select id="getTradVolume" parameterType="String" resultType="int">
+        select count(inputdate) as payNum from (select inputdate from bnk_erp_infor UNION all select inputdate from bnk_nbk_infor )
+        where to_char(inputdate,'yyyy-MM-dd')=#{queryNow,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getDayTrad" resultType="java.util.HashMap">
+        select count(to_char(inputdate,'yyyy-MM-dd')) as payNum,to_char(inputdate,'yyyy-MM-dd') as payDate from
+        (
+            select agentid,inputdate from bnk_erp_infor a where agentid in
+                <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                UNION ALL
+            select agentid,inputdate from bnk_nbk_infor a where agentid in
+                <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            )
+        where to_char(inputdate,'yyyy-MM-dd') between #{dateFrom,jdbcType=VARCHAR} and #{dateTo,jdbcType=VARCHAR}
+            group by to_char(inputdate,'yyyy-MM-dd') order by payDate
+    </select>
+    
+    <select id="getPayTimeDistribution" resultType="java.util.HashMap">
+        select count(paytime) as timeNum , paytime from
+        (
+            select nbk.agentid,to_char(nbk.inputdate,'hh24')as paytime from bnk_nbk_infor nbk
+                where to_char(inputdate,'yyyy-MM-dd')=#{payDate,jdbcType=VARCHAR}
+            UNION ALL
+            select erp.agentid,to_char(erp.inputdate,'hh24')as paytime from bnk_erp_infor erp
+                where to_char(inputdate,'yyyy-MM-dd')=#{payDate,jdbcType=VARCHAR}
+        ) where agentid in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+         </foreach>
+        group by paytime order by paytime
+    </select>
+</mapper>

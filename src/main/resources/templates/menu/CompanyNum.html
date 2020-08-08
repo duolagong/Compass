@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="companyNum">
+            <!--<section class="hk-sec-wrapper">-->
+                <div class="nicescroll-bar">
+                    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-light bg-transparent">
+                            <li class="breadcrumb-item"><a href="#">功能维护</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">目标地址</li>
+                        </ol>
+                    </nav>
+                    <div class="container-fluid">
+                        <div class="hk-pg-header">
+                            <h2 class="hk-pg-title"><span class="pg-title-icon"><i data-feather="sliders"></i></span>目标地址</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <p class="mb-40">修改支付通目标地址</p>
+                                <section class="hk-sec-wrapper">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="table-responsive">
+                                                <div id="comNum_toolbar">
+                                                    <button id="comNum_btn" type="button" class="btn btn-outline-success">
+                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>目标地址修改
+                                                    </button>
+                                                </div>
+                                                <table id="comNum_table" class="table mb-0"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!--</section>-->
+        </div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <script type="text/javascript">
+                $(function() {
+                    $('#companyNum #comNum_table').bootstrapTable({
+                        url: '/companyNum',
+                        method: 'get',
+                        toolbar: '#comNum_btn',
+                        clickEdit: true,
+                        showToggle: true,
+                        pagination: true,
+                        pageSize: 5,
+                        pageList: [10, 25],
+                        showColumns: true,
+                        showPaginationSwitch: false,
+                        showRefresh: true,
+                        clickToSelect: true,  //点击row选中radio或CheckBox
+                        checkbox: true,
+                        singleSelect: true,
+                        showToggle: true,
+                        columns: [{
+                            checkbox: true
+                        }, {
+                            field: 'version',
+                            title: '目标系统',
+                            width: 100
+                        }, {
+                            field: 'versionName',
+                            title: '系统名称',
+                            width: 300
+                        }, {
+                            field: 'targetAdd',
+                            title: '目标地址',
+                            width: 100,
+                            align : 'center',
+                            formatter:companyNum_Method_Icon
+                            /*,
+                            cellStyle:formatTableUnit*/
+                        }, {
+                            field: 'sftpIP',
+                            title: 'sftp地址',
+                            width: 100
+                        }, {
+                            field: 'sftpPost',
+                            title: 'sftp端口',
+                            width: 100
+                        }, {
+                            field: 'sftpUser',
+                            title: 'sftp用户',
+                            width: 100
+                        }, {
+                            field: 'sftpPw',
+                            title: 'sftp密码',
+                            width: 200
+                        },{
+                            field: 'budgetSite',
+                            title: '预算地址',
+                            width: 100,
+                            align : 'center',
+                            formatter:companyNum_Method_Icon
+                        }, {
+                            field: 'budgetUser',
+                            title: '预算账户',
+                            width: 200
+                        },{
+                            field: 'budgetPs',
+                            title: '预算密码',
+                            width: 100
+                        }, {
+                            field: 'Switch',
+                            title: '纳入监控池',
+                            width: 50
+                        }]
+                    });
+                });
+                function companyNum_Method_Icon(value,row,index) {
+                    var span=document.createElement('span');
+                    span.setAttribute('title',value);
+                    if(value == "undefined" || value == null || value == ""){
+                        span.innerHTML = '<h3><i class="fa fa fa-blind"></i></h3>';
+                    }else {
+                        span.innerHTML = '<h3><i class="fa fa-map-signs"></i></h3>';
+                    }
+                    return span.outerHTML;
+                }
+                // function formatTableUnit(value, row, index) {
+                //     return { css: { "background-color":"#D5D5D5" } }
+                // }
+             </script>
+            <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>
+        </section>-->
+    </body>
+</html>

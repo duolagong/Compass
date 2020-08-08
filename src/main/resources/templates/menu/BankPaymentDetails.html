@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>BankPaymentDetails</title>
+        <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" th:fragment="Model">
+            <div class="nicescroll-bar position-relative">
+                <div class="nicescroll-bar position-relative">
+                    <div class="settings-panel-wrap" th:object="${bankPayment}">
+                        <div class="row">
+                            <div class="col-xl-4 mb-20">
+                                <div class="card">
+                                    <h6 class="card-header border-0">
+                                        <i class="ion ion-md-clipboard font-21 mr-10"></i><span th:text="支付单-"></span><span id="ordernum" th:text="*{payNote.orderNum}"></span>
+                                        <!--<div id="payprocess" th:value="*{payprocess}" hidden></div>-->
+                                    </h6>
+                                    <div class="accordion accordion-type-2 accordion-flush" id="accordion_2">
+                                        <div class="card">
+                                            <div class="card-header d-flex justify-content-between activestate">
+                                                <a role="button" data-toggle="collapse" href="#collapse_1i" aria-expanded="true">支付头信息</a>
+                                            </div>
+                                            <div id="collapse_1i" class="collapse show" data-parent="#accordion_2" role="tabpanel">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="w-30" >共享中心</td>
+                                                            <td class="w-70" id="version" th:text="*{payNote.version == ''}?'无':*{payNote.version}">version</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">报文类型</td>
+                                                            <td class="w-70" id="txcode" th:text="*{payNote.txCode == ''}?'无':*{payNote.txCode}">TxCode</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">企业编号</td>
+                                                            <td class="w-70" id="subbranchid" th:text="*{payNote.subBranchId == ''}?'无':*{payNote.subBranchId}">SubBranchId</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">序列号</td>
+                                                            <td class="w-70" th:text="*{payNote.txSerial == ''}?'无':*{payNote.txSerial}">TxSerial</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">生成时间</td>
+                                                            <td class="w-70" th:text="*{payNote.txMoment == ''}?'无':*{payNote.txMoment}">TxMoment</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">归属银行</td>
+                                                            <td class="w-70" id="agentid" th:text="*{payNote.agentId == ''}?'无':*{payNote.agentId}">AgentId</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header d-flex justify-content-between">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse_2i" aria-expanded="false">付款方信息</a>
+                                            </div>
+                                            <div id="collapse_2i" class="collapse" data-parent="#accordion_2">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="w-30">付款方账号</td>
+                                                            <td class="w-70" th:text="*{payNote.outAcctId == ''}?'无':*{payNote.outAcctId}">OutAcctId</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">付款方名称</td>
+                                                            <td class="w-70" th:text="*{payNote.outAcctName == ''}?'无':*{payNote.outAcctName}">OutAcctName</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">付款方行号</td>
+                                                            <td class="w-70" th:text="*{payNote.outBranchId == ''}?'无':*{payNote.outBranchId}">OutBranchId</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">付款行名称</td>
+                                                            <td class="w-70" th:text="*{payNote.outBranchName == ''}?'无':*{payNote.outBranchName}">OutBranchName</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header d-flex justify-content-between">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse_3i" aria-expanded="false">收款方信息</a>
+                                            </div>
+                                            <div id="collapse_3i" class="collapse" data-parent="#accordion_2">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="w-30">收款方账号</td>
+                                                            <td class="w-70" th:text="*{payNote.inAcctId == ''}?'无':*{payNote.inAcctId}">InAcctId</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">收款方名称</td>
+                                                            <td class="w-70" th:text="*{payNote.inAcctName == ''}?'无':*{payNote.inAcctName}">InAcctName</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">收款方行号</td>
+                                                            <td class="w-70" th:text="*{payNote.inBranchId == ''}?'无':*{payNote.inBranchId}">InBranchName</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">收款行名称</td>
+                                                            <td class="w-70" th:text="*{payNote.inBranchName == ''}?'无':*{payNote.inBranchName}">InBranchName</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">收款方城市</td>
+                                                            <td class="w-70" th:text="*{payNote.recCityName == ''}?'无':*{payNote.recCityName}">InBranchName</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header d-flex justify-content-between">
+                                                <a class="collapsed" role="button" data-toggle="collapse"
+                                                   href="#collapse_4i" aria-expanded="false">支付信息
+                                                </a>
+                                            </div>
+                                            <div id="collapse_4i" class="collapse" data-parent="#accordion_2">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="w-30">支付金额</td>
+                                                            <td class="w-70" id="txamount" th:text="*{payNote.txAmount == ''}?'无':*{payNote.txAmount}">TotalAmount</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">支付时间</td>
+                                                            <td class="w-70" th:text="*{payNote.espDate == ''}?'无':*{payNote.espDate}">EspDate</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">结算币别</td>
+                                                            <td class="w-70" th:text="*{payNote.curCode == ''}?'无':*{payNote.curCode}">CurCode</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">用途</td>
+                                                            <td class="w-70" th:text="*{payNote.purpose == ''}?'无':*{payNote.purpose}">Purpose</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">摘要</td>
+                                                            <td class="w-70" th:text="*{payNote.abstractStr == ''}?'无':*{payNote.abstractStr}">AbstractStr</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">备注</td>
+                                                            <td class="w-70" th:text="*{payNote.memo == ''}?'无':*{payNote.memo}">Memo</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header d-flex justify-content-between">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse_6i" aria-expanded="false">支付信息标志</a>
+                                            </div>
+                                            <div id="collapse_6i" class="collapse" data-parent="#accordion_2">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="w-30">付款类型</td>
+                                                            <td class="w-70"
+                                                                th:text="*{payNote.bankaccounttype == ''}?'无':*{payNote.bankaccounttype}">BankAccountType</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">公私标志</td>
+                                                            <td class="w-70"
+                                                                th:text="*{payNote.personFlag == '' or payNote.personFlag == null}?'无':(*{payNote.personFlag=='1'}?'对公':'对私')">PersonFlag</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">同城异地标志</td>
+                                                            <td class="w-70"
+                                                                th:text="*{payNote.areaFlag == '' or payNote.areaFlag == null}?'无':(*{payNote.areaFlag}?'同城':'异地')">AreaFlag</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">加急标志</td>
+                                                            <td class="w-70"
+                                                                th:text="*{payNote.hurryFlag == '' or payNote.hurryFlag == null}?'无':(*{payNote.hurryFlag}?'加急':'普通')">HurryFlag</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="w-30">跨行支付标志</td>
+                                                            <td class="w-70"
+                                                                th:text="*{payNote.skipFlag == '' or payNote.personFlag == null}?'无':(*{payNote.skipFlag}?'同行':'跨行')">SkipFlag</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 mb-20">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th>类型</th>
+                                                    <th>指令状态</th>
+                                                    <th>状态信息</th>
+                                                    <th>报文信息</th>
+                                                    <th>处理时间</th>
+                                                </tr>
+                                                <tr th:if="*{banksyncode} ne null">
+                                                    <td><i data-feather="users"></i>同步状态</td>
+                                                    <td th:text="*{banksyncode}" style="" th:style="*{banksyncode.startsWith('E')}?'color: red':'color: green'">无</td>
+                                                    <td th:text="*{banksynmsg}" style="" th:style="*{banksynmsg.startsWith('E')}?'color: red':'color: green'">无</td>
+                                                    <td data-toggle="tooltip" data-placement="top" title="" th:attr="title=*{banksynxml}">
+                                                        <center><i class="fa fa-commenting"></i></center>
+                                                    </td>
+                                                    <td th:text="*{banksyndate}">无</td>
+                                                </tr>
+                                                <tr th:if="*{bankfinalcode} ne null">
+                                                    <td><i data-feather="users"></i>最终状态</td>
+                                                    <td th:text="*{bankfinalcode}" style="" th:style="*{bankfinalcode.startsWith('E')}?'color: red':'color: green'">无</td>
+                                                    <td th:text="*{bankfinalmsg}" style="" th:style="*{bankfinalcode.startsWith('E')}?'color: red':'color: green'">无</td>
+                                                    <td data-toggle="tooltip" data-placement="top" title="" th:attr="title=*{bankfinalxml}">
+                                                        <center><i class="fa fa-commenting"></i></center>
+                                                    </td>
+                                                    <td th:text="*{bankfinaldate}">无</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        <script type="text/javascript">-->
+<!--            function paramsMatter(value,row,index) {-->
+<!--                var span=document.createElement('span');-->
+<!--                span.setAttribute('title',value);-->
+<!--                span.innerHTML = '<h3><i class="fa fa-commenting"></i></h3>';-->
+<!--                return span.outerHTML;-->
+<!--            }-->
+<!--        </script>-->
+        <!--<script type="text/javascript" src="/vendors/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/dist/js/dropdown-bootstrap-extended.js"></script>-->
+    </body>
+</html>

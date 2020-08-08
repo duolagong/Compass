@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="sysUser">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">系统设置</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">用户信息</li>
+                </ol>
+            </nav>
+            <div class="container-fluid">
+                <div class="hk-pg-header">
+                    <h2 class="hk-pg-title">
+                        <button class="btn btn-icon btn-icon-circle btn-warning btn-icon-style-3" type="button" data-toggle="collapse" data-target="#user_collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="btn-icon-wrap"><i class="fa fa-users fa-2x"></i></span>
+                        </button>&nbsp用户信息维护
+                    </h2>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="collapse" id="user_collapseExample">
+                                    <div class="card card-body">
+                                        用户类型可按照提醒类型进行划分
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="hk-sec-wrapper">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <div id="sysUser_toolbar">
+                                        <button id="sysUser_btn_add" type="button" class="btn btn-gradient-success" data-toggle="modal" data-target="#sysUser_addModal">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp系统用户新增
+                                        </button>
+                                    </div>
+                                    <table id="sysUser_table" class="table mb-0"></table>
+                                </div>
+                            </div>
+                            <!-- 模态框 -->
+                            <div class="modal fade" id="sysUser_addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="width:200%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">系统用户新增</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="addform" class="was-validated" >
+                                                <div class="form-group">
+                                                    <label for="userId_add" class="control-label">用户ID:</label>
+                                                    <input type="text" class="form-control" id="userId_add" name="userId_add" required>
+                                                    <label for="userName_add" class="control-label">用户名称:</label>
+                                                    <input type="text" class="form-control" id="userName_add" name="userName_add" required>
+                                                    <label for="phone_add" class="control-label">手机号码:</label>
+                                                    <input type="text" class="form-control" id="phone_add" name="phone_add" required>
+                                                    <!--<label for="wechat_add" class="control-label">微信编号:</label>
+                                                    <input type="text" class="form-control" id="wechat_add" name="wechat_add">-->
+                                                    <label for="userType_add" class="control-label">用户类型:</label>
+                                                    <select class="form-control custom-select" id="userType_add" required>
+                                                        <option value="USER">用 户</option>
+                                                        <option value="ADMIN">管理员</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span id="returnMessage" class="glyphicon"> </span>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-success" id="addModal-footer-add">确定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="sysUser_upModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="width:200%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">用户信息修改</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="id_up" name="id_up" hidden>
+                                                    <label for="userName_up" class="control-label">用户ID:</label>
+                                                    <input type="text" class="form-control" id="userId_up" name="userId_up" readOnly="true">
+                                                    <label for="userName_up" class="control-label">用户名称:</label>
+                                                    <input type="text" class="form-control" id="userName_up" name="userName_up">
+                                                    <label for="phone_up" class="control-label">手机号码:</label>
+                                                    <input type="text" class="form-control" id="phone_up" name="phone_up">
+                                                    <!--<label for="wechat_up" class="control-label">微信编号:</label>
+                                                    <input type="text" class="form-control" id="wechat_up" name="wechat_up">-->
+                                                    <label for="userType_up" class="control-label">用户类型:</label>
+                                                    <select class="form-control custom-select" id="userType_up" required>
+                                                        <option value="USER">用 户</option>
+                                                        <option value="ADMIN">管理员</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span class="glyphicon"></span>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-success" id="updateModal-footer-up">确定修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--</section>-->
+        <script type="text/javascript" src="js/SysUser/SysUser.js"></script>
+    </body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.programme.Fortress.Function.Business.dao.PayInforMapper">
+
+    <select id="getPayInforCount" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="int">
+        select count(ordernum) from bnk_pay_infor where to_char(trandate,'yyyy-MM-dd') between #{dateFrom} and #{dateTo}
+        <include refid="condition"/>
+    </select>
+
+    <select id="getPayInfor" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="com.programme.Fortress.Function.Business.entity.PayInfor">
+        select * from (select * from( select ROWNUM AS rowno,<include refid="payColumn"/> from bnk_pay_infor pay where to_char(pay.trandate,'yyyy-MM-dd') between #{dateFrom} and #{dateTo}
+        <include refid="condition"/> ) order by trandate )table_alias
+        where table_alias.rowno between ${offset}+1 and ${offset}+${limit}
+	</select>
+
+    <select id="getOrdernumInforCount" parameterType="java.util.HashMap" resultType="int">
+        select count(ordernum) from bnk_pay_infor where (version ='21' or txcode='2000')
+        <if test="ordernum !=null and ordernum !=''">
+            and ordernum in
+            <foreach item="ordernum" index="index" collection="ordernum" open="(" separator="," close=")">
+                #{ordernum}
+            </foreach>
+        </if>
+        <if test="queryDate !=null and queryDate !=''">
+            and to_char(trandate,'yyyy-MM-dd') = #{queryDate}
+        </if>
+    </select>
+
+    <select id="getOrdernumInfor" parameterType="java.util.HashMap" resultType="com.programme.Fortress.Function.Business.entity.PayInfor">
+        select * from (select ROWNUM AS rowno,<include refid="payColumn"/> from bnk_pay_infor pay where (version ='21' or txcode='2000')
+        <if test="ordernum !=null and ordernum !=''">
+            and ordernum in
+            <foreach item="ordernum" index="index" collection="ordernum" open="(" separator="," close=")">
+                #{ordernum}
+            </foreach>
+        </if>
+        <if test="queryDate !=null and queryDate !=''">
+            and to_char(trandate,'yyyy-MM-dd') = #{queryDate}
+        </if>
+         order by trandate )table_alias
+        where table_alias.rowno between ${offset}+1 and ${offset}+${limit}
+    </select>
+
+    <select id="getInforNoteCount" parameterType="String" resultType="int">
+        select count(i.ordernum) from bnk_pay_infor i where to_char(i.trandate,'yyyy-MM-dd') = #{nowDate,jdbcType=VARCHAR}  and i.ordernum not in
+            (select n.ordernum from bnk_pay_note n where n.espdate=replace(#{nowDate,jdbcType=VARCHAR},'-',''))
+    </select>
+
+    <select id="getInforNote" parameterType="String" resultType="java.util.HashMap">
+        select i.ordernum,i.tranxml from bnk_pay_infor i where to_char(i.trandate,'yyyy-MM-dd') = #{nowDate,jdbcType=VARCHAR}  and i.ordernum not in
+            (select n.ordernum from bnk_pay_note n where n.espdate=replace(#{nowDate,jdbcType=VARCHAR},'-',''))
+    </select>
+
+    <sql id="payColumn">
+        pay.ordernum,pay.version,pay.agentid,pay.personflag,pay.txmoment,pay.subbranchid,pay.txamount,pay.trandate,pay.payprocess,pay.txcode,pay.bankfinalcode
+    </sql>
+    
+    <sql id="condition">
+        <if test="ordernum !=null and ordernum !=''">
+            and ordernum =#{ordernum,jdbcType=VARCHAR}
+        </if>
+        <if test="versions != null and versions.length>0">
+            and version in
+            <foreach item="versions" index="index" collection="versions" open="(" separator="," close=")">
+                #{versions}
+            </foreach>
+        </if>
+        <if test="agentids !=null and agentids.length>0">
+            and agentid in
+            <foreach item="agentids" index="index" collection="agentids" open="(" separator="," close=")">
+                #{agentids}
+            </foreach>
+        </if>
+        <if test="txcode !=null and txcode !=''">
+            and txcode =#{txcode}
+        </if>
+        <if test="payprocess !=null and payprocess !=''">
+            and payprocess =#{payprocess}
+        </if>
+        <if test="txamount !=null and txamount !=''">
+            and txamount like '%${txamount}%'
+        </if>
+        <if test="personflag !=null and personflag !=''">
+            and personflag =#{personflag}
+        </if>
+    </sql>
+
+    <sql id="whereParams">
+        <if test="ordernum !=null and ordernum !=''">
+            and ordernum in
+            <foreach item="ordernum" index="index" collection="list" open="(" separator="," close=")">
+                ${ordernum}
+            </foreach>
+        </if>
+        <if test="version != null and ordernum !=''">
+            and version in
+            <foreach item="version" index="index" collection="list" open="(" separator="," close=")">
+                ${version}
+            </foreach>
+        </if>
+        <if test="agentid !=null and agentid !=''">
+            and agentid in
+            <foreach item="agentid" index="index" collection="list" open="(" separator="," close=")">
+                ${agentid}
+            </foreach>
+        </if>
+        <if test="txcode !=null and agentid !=''">
+            and txcode =${txcode}
+        </if>
+        <if test="payprocess !=null and payprocess !=''">
+            and payprocess =${payprocess}
+        </if>
+        <if test="txamount !=null and txamount !=''">
+            and payprocess =${payprocess}
+        </if>
+        <if test="personflag !=null and personflag !=''">
+            and personflag =${personflag}
+        </if>
+    </sql>
+</mapper>

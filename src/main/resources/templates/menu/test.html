@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" href="css/nth.tabs.min.css" type='text/css'/>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+    </head>
+<body>
+    <section>
+        <div class="hk-pg-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nth-tabs" id="editor-tabs"></div><!--使用时只需此标签，class固定,id自定义-->
+                </div>
+            </div>
+            <!--<ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="home" aria-selected="true">
+                        <h6>内容1</h6>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="profile" aria-selected="false">
+                        <h6>内容2</h6>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#audit" role="tab" aria-controls="contact" aria-selected="false">
+                        <h6>内容3</h6>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab1" data-toggle="tab" href="#audit" role="tab" aria-controls="contact" aria-selected="false">
+                        <h6>内容4</h6>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab2" data-toggle="tab" href="#audit" role="tab" aria-controls="contact" aria-selected="false">
+                        <h6>内容4</h6>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content border border-top-0" id="myTabContent" >
+                <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="home-tab">
+                    <ul class="list-group list-group-flush">
+                        &lt;!&ndash;<div th:replace="menu/CompanyNum :: CompanyNum"></div>&ndash;&gt;
+                        <a></a>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="profile-tab">
+                    <div th:replace="menu/CompanyNum :: CompanyNum"></div>
+                </div>
+                <div class="tab-pane fade" id="audit" role="tabpanel" aria-labelledby="contact-tab">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">内容3</li>
+                    </ul>
+                </div>
+            </div>-->
+            <!--<nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">付款交易</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">付款交易查询</li>
+                </ol>
+            </nav>-->
+        </div>
+    </section>
+    <section th:replace="common/JS::common_js(~{::script})">
+        <script>
+            var nthTabs;
+            $(function () {
+                nthTabs = $("#editor-tabs").nthTabs();
+                nthTabs.addTab({
+                    id:'a',
+                    title:'孙悟空',
+                    content:'看我七十二变',
+                }).addTab({
+                    id:'j',
+                    title:'熬夜写的啊',
+                    content:'码农苦逼~',
+                }).setActTab("#c");
+            });
+        </script>
+        <script type="text/javascript" src="dist/js/init.js"></script>
+        <script src="js/nth.tabs.min.js"></script>
+        <script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    </section>
+</body>
+</html>

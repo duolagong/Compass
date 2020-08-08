@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="noticeSend">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">财企支付</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">支付通结果重发</li>
+                </ol>
+            </nav>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <section class="hk-sec-wrapper">
+                            <div class="hk-pg-header">
+                                <h2 class="hk-pg-title"><i class="fa fa-history"></i>&nbsp资管结果重发</h2>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm">
+                                    <form class="needs-validation" novalidate>
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="spanOrdernum">支付序号</span>
+                                                    </div>
+                                                    <textarea class="form-control" rows="1" id="inputOrdernum"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-15">
+                                            <div class="col-md-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">交易时间</span>
+                                                    </div>
+                                                    <input class="form-control" type="text" name="daterange" id="inputSingleDate"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">查询逻辑</span>
+                                                    </div>
+                                                    <select class="form-control custom-select" aria-describedby id="inputRule">
+                                                        <option value="">全部</option>
+                                                        <option value="0">按交易时间</option>
+                                                        <option value="1">按交易序号</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button id="noticeSend_btn_get" class="btn btn-gradient-success" type="button">
+                                                    <i class="fa fa-search-plus fa-1x"></i>交易查询
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <table id="noticeSend_table" class="table mb-0"></table>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--</section>-->
+        <script type="text/javascript" src="js/PayInfor/NoticeSend.js"></script>
+    </body>
+</html>

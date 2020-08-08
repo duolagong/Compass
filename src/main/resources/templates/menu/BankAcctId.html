@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" id="bankAcctId">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">账户权限</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">银行账户权限</li>
+                </ol>
+            </nav>
+            <div class="container-fluid">
+                <section class="hk-sec-wrapper">
+                    <div class="hk-pg-header">
+                        <h3 class="hk-pg-title">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-book fa-stack-1x"></i>
+                            </span>银行账户权限
+                        </h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation">
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">所属银行</span>
+                                            </div>
+                                            <select class="form-control custom-select" aria-describedby id="input_agentid">
+                                                <option value="">未选择</option>
+                                                <option th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">本方账户</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="AcctId" aria-describedby id="input_acctid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="bankAcctId_toolbar">
+                                    <button id="bankAcctId_btn_get" class="btn btn-gradient-success" type="button">
+                                        <i class="fa fa-search-plus fa-1x"></i>&nbsp银行账户查询
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table id="bankAcctId_table" class="table mb-0"></table>
+                </section>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/BankTrade/BankAcctId.js"></script>
+    </body>
+</html>

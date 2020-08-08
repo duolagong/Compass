@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div id="bankPayment">
+            <div class="hk-wrapper hk-alt-nav"><!--hk-pg-wrapper-->
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">银企平台</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">付款交易查询</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                    <section class="hk-sec-wrapper">
+                        <div class="hk-pg-header">
+                            <h3 class="hk-pg-title"><i class="fa fa-bank"></i>&nbsp银企平台-付款交易查询</h3>
+                            <!--<h5 class="hk-pg-title">
+                                <button class="btn btn-icon btn-icon-circle btn-warning btn-icon-style-3" type="button" data-toggle="collapse" data-target="#alertRule_collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <span class="btn-icon-wrap"><i class="fa fa-bank fa-2x"></i></span>
+                                </button>&nbsp银企平台-付款交易查询
+                            </h5>-->
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate>
+                                    <div class="form-row">
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="spanOrdernum">支付序号</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Ordernum,Ordernum,Ordernum..." aria-describedby id="inputOrdernum">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">银行编号</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputAgentid">
+                                                    <option value="">全部</option>
+                                                    <option th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-15">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">付款金额</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="TxAmount" aria-describedby id="inputTxamount">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易时间</span>
+                                                </div>
+                                                <input class="form-control" type="text" aria-describedby name="daterange" id="inputTrandate"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">付款类型</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputType">
+                                                    <option value="">全部</option>
+                                                    <option value="AA">代理支付</option>
+                                                    <option value="SA">对公支付</option>
+                                                    <option value="SA+">对私支付</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">完成状态</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputResult">
+                                                    <option value="">全部</option>
+                                                    <option value="0">已完成</option>
+                                                    <option value="1">待处理</option>
+                                                    <option value="2">同步中</option>
+                                                    <option value="3">异常交易</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="bankPayment_toolbar">
+                                        <button id="bankPayment_btn_get" class="btn btn-gradient-success" type="button">
+                                            <i class="fa fa-search-plus fa-1x"></i> 付款交易查询
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="bankPayment_table" class="table mb-0"></table>
+                        <br/>
+                    </section>
+                </div>
+            </div>
+            <div class="modal fade" id="bankPayment_inforModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:1500px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title">付款信息</h4>
+                        </div>
+                        <div class="modal-body" th:fragment="bankPaymentDetails" id="bankPaymentDetails">
+                            <div th:if="${bankPayment} ne null">
+                                <div th:replace="menu/BankPaymentDetails :: Model"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <span class="glyphicon"></span>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">关闭窗口</button>
+                            <!--<button type="button" class="btn btn-yellow" id="align">银行报文下载</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="bankPayment_QueryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:1000px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title">转账结果</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateform">
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col-md-8">
+                                            <h4><span class="badge badge-soft-green badge-pill">返回报文</span></h4>
+                                            <textarea class="form-control" rows="18" id="resultXml" readOnly="true"></textarea>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="queryOrdernum" class="control-label">支付序号:</label>
+                                            <input type="text" class="form-control" id="queryOrdernum" name="queryOrdernum" readOnly="true">
+                                            <label for="queryTransnoId" class="control-label">银行序号:</label>
+                                            <input type="text" class="form-control" id="queryTransnoId" name="queryTransnoId" readOnly="true">
+                                            <label for="queryAgentId" class="control-label">银行编号:</label>
+                                            <input type="text" class="form-control" id="queryAgentId" name="queryAgentId" readOnly="true">
+                                            <label for="querySubBranchId" class="control-label">企业编号:</label>
+                                            <input type="text" class="form-control" id="querySubBranchId" name="querySubBranchId" readOnly="true">
+                                            <br/>
+                                            <button id="bankPayment_btn_1030" class="btn btn-success btn-block btn-wth-icon mt-10" type="button">
+                                                <span class="icon-label">
+                                                    <i class="fa fa-binoculars"></i>
+                                                </span>
+                                                <span class="btn-text">查询转账结果</span>
+                                            </button>
+                                            <button id="bankPayment_btn_1031" class="btn btn-success btn-block btn-wth-icon mt-10" type="button">
+                                                <span class="icon-label">
+                                                    <i class="fa fa-balance-scale"></i>
+                                                </span>
+                                                <span class="btn-text">查询结果通知</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <span class="glyphicon"></span>
+                            <button type="button" class="btn btn-gold" data-dismiss="modal">关闭窗口</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="bankPayment_xmlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:1200px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title">查看系统报文</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="getform">
+                                <div class="form-group" th:fragment="bankPaymentTranXml" id="bankPaymentTranXml">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4><span class="badge badge-success badge-pill"><i class="fa fa-paper-plane"></i> 核心支付报文</span></h4>
+                                            <div class="form-group" th:if="${tranXml} ne null">
+                                                <textarea class="form-control" rows="16" readOnly="true" th:text="${tranXml}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4><span class="badge badge-gold badge-pill"><i class="fa fa-university"></i> 银行支付报文</span></h4>
+                                            <div class="form-group" th:if="${bankXml} ne null">
+                                                <textarea class="form-control" rows="16" readOnly="true" th:text="${bankXml}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4><span class="badge badge-success badge-pill"><i class="fa fa-paper-plane"></i> 支付响应报文</span></h4>
+                                            <div class="form-group" th:if="${tranSynXml} ne null">
+                                                <textarea class="form-control" rows="16" readOnly="true" th:text="${tranSynXml}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4><span class="badge badge-gold badge-pill"><i class="fa fa-university"></i> 银行响应报文</span></h4>
+                                            <div class="form-group" th:if="${bankSynXml} ne null">
+                                                <textarea class="form-control" rows="16" readOnly="true" th:text="${bankSynXml}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</section>-->
+        </div>
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+        <!--<script th:inline="javascript" type="text/javascript"></script>-->
+        <script type="text/javascript" src="js/BankTrade/BankPayment.js"></script>
+        <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+        <!--<script type="text/javascript" src="vendors/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="vendors/daterangepicker/daterangepicker.js"></script>
+        <script type="text/javascript" src="dist/js/daterangepicker-data.js"></script>-->
+        <!--</section>-->
+    </body>
+</html>

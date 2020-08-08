@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="common_js(scripts)">
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="vendors/bootstrap-select/dist/js/defaults-zh_CN.min.js"></script>
+    <!-- Slimscroll JavaScript -->
+    <script src="dist/js/jquery.slimscroll.js"></script>
+    <!-- FeatherIcons 图标JavaScript -->
+    <script src="dist/js/feather.min.js"></script>
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+    <!-- Toggles JavaScript -->
+    <script src="vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="dist/js/toggle-data.js"></script>
+    <!--/* Per-page placeholder for additional js */-->
+    <script type="text/javascript" src="js/bootstrap-tab.js"></script>
+   <!-- <script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+    <script src="dist/js/init.js"></script>
+    <script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="vendors/echarts/dist/echarts.min.js"></script>
+    <script src="vendors/echarts/dist/walden.js"></script>
+    <script src="vendors/echarts/dist/echarts-gl.min.js"></script>
+    <script src="vendors/echarts/dist/ecStat.min.js"></script>
+    <script src="vendors/echarts/dist/dataTool.min.js"></script>
+    <script src="vendors/echarts/dist/china.js"></script>
+    <script src="vendors/echarts/dist/bmap.min.js"></script>
+    <!--<script src="vendors/echarts/dist/world.js"></script>-->
+    <!-- 时间框插件 -->
+    <script type="text/javascript" src="vendors/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="vendors/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="dist/js/daterangepicker-data.js"></script>
+    <!-- Toastr JS -->
+    <script src="vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+    <th:block th:replace="${scripts}" />
+</div>
+</html>

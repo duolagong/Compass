@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    </head>
+<body>
+    <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+    <div class="hk-wrapper hk-alt-nav" id="sysMessage">
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">工具箱</a></li>
+                <li class="breadcrumb-item active" aria-current="page">报文模板</li>
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="hk-pg-header">
+                <h2 class="hk-pg-title"><i class="fa fa-cube"></i>&nbsp报文模板</h2>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <p class="mb-40">系统业务涉及的全部报文模板集合</p>
+                    <section class="hk-sec-wrapper">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="table-responsive">
+                                    <div id="sysMessage_toolbar">
+                                        <button id="btn_add" type="button" class="btn btn-outline-success" data-toggle="modal">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                                        </button>
+                                    </div>
+                                    <table id="sysMessage_table" class="table mb-0"></table>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="sysMessage_addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="width:200%;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">新增报文模板</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="addform" class="was-validated">
+                                            <div class="form-group">
+                                                <label for="type_add" class="control-label">模板类型:</label>
+                                                <input type="text" class="form-control" id="type_add" name="type_add" required>
+                                                <label for="typeSource_add" class="control-label">类型来源:</label>
+                                                <input type="text" class="form-control" id="typeSource_add" name="typeSource_add" required>
+                                                <label for="typeName_add" class="control-label">类型名称:</label>
+                                                <input type="text" class="form-control" id="typeName_add" name="typeName_add" required>
+                                                <label for="messageType_add" class="control-label">模板格式:</label>
+                                                <select class="form-control custom-select" id="messageType_add" required>
+                                                    <option value="">请选择一种类型</option>
+                                                    <option value="XML">XML</option>
+                                                    <option value="JSON">JSON</option>
+                                                    <option value="SQL">SQL</option>
+                                                </select>
+                                                <label for="message_add" class="control-label">报文模板:</label>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="8" id="message_add" required></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-primary" id="addModal-footer-add">确认新增</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="sysMessage_updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="width:200%;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">修改报文模板</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="updateform">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="id_up" name="id_up" hidden>
+                                                <label for="type_up" class="control-label">模板类型:</label>
+                                                <input type="text" class="form-control" id="type_up" name="type_up">
+                                                <label for="typeSource_up" class="control-label">类型来源:</label>
+                                                <input type="text" class="form-control" id="typeSource_up" name="typeSource_up">
+                                                <label for="typeName_up" class="control-label">类型名称:</label>
+                                                <input type="text" class="form-control" id="typeName_up" name="typeName_up">
+                                                <label for="messageType_up" class="control-label">模板格式:</label>
+                                                <select class="form-control" id="messageType_up">
+                                                    <option selected>XML</option>
+                                                    <option value="JSON">JSON</option>
+                                                    <option value="SQL">SQL</option>
+                                                </select>
+                                                <label for="message_up" class="control-label">报文模板:</label>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="8" id="message_up"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-primary" id="updateModal-footer-up">确定修改</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="sysMessage_getModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="width:200%;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">查看报文模板</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="getform">
+                                            <div class="form-group">
+                                                <label for="message_get" class="control-label">报文模板:</label>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="20" id="message_get" readOnly="true"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</section>-->
+    <!--<section th:replace="common/JS::common_js(~{::script})">-->
+        <script type="text/javascript" src="js/SysMessage/SysMessage.js"></script>
+<!--        <script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+<!--    </section>-->
+</body>
+</html>

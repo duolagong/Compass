@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.programme.Fortress.Function.Business.dao.PayNoteMapper">
+
+    <select id="getPersonflag" parameterType="String" resultType="java.util.HashMap">
+        select '内部对公' as "name",count(ordernum)as  "value"  from bnk_pay_note where espdate=#{nowDate} and agentid in('Z01','W01') and personflag='1'
+            union all
+        select '内部对私' as "name",count(ordernum)as  "value"  from bnk_pay_note where espdate=#{nowDate} and agentid in('Z01','W01') and personflag='2'
+            union all
+        select '银行对公' as "name",count(ordernum)as  "value"  from bnk_pay_note where espdate=#{nowDate} and agentid not in('Z01','W01') and personflag='1'
+            union all
+        select '银行对私' as "name",count(ordernum)as  "value"  from bnk_pay_note where espdate=#{nowDate} and agentid not in('Z01','W01') and personflag='2'
+    </select>
+
+    <select id="getPayNoteCount" parameterType="String" resultType="int">
+        select count(n.ordernum) from bnk_pay_note n where n.espdate=#{nowDate,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getDayTrad" resultType="java.util.HashMap">
+        select count(to_char(created_time,'yyyy-MM-dd')) as payNum,to_char(created_time,'yyyy-MM-dd') as payDate from bnk_pay_note a where
+        to_char(created_time,'yyyy-MM-dd') between #{dateFrom,jdbcType=VARCHAR} and #{dateTo,jdbcType=VARCHAR}
+        and agentid in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by to_char(created_time,'yyyy-MM-dd') order by payDate
+    </select>
+
+</mapper>

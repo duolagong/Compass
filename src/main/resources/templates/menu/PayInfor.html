@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css"/>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css"/>
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css"/>
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div id="payInfor">
+            <div class="hk-wrapper hk-alt-nav"><!--hk-pg-wrapper-->
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">付款交易</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">付款交易查询</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                    <section class="hk-sec-wrapper">
+                        <div class="hk-pg-header">
+                            <h5 class="hk-pg-title">查询条件</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="spanOrdernum">支付序号</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Ordernum" aria-describedby id="inputOrdernum">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易类型</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputTxCode">
+                                                    <option value="">全部</option>
+                                                    <option value="1000">资金普通付款</option>
+                                                    <option value="2000">资金监控付款</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">共享中心</span>
+                                                </div>
+                                                <select class="form-control selectpicker custom-select" multiple aria-describedby
+                                                        data-live-search="true" data-actions-box="true" id="inputVersion">
+                                                    <option th:each="version:${versions}" th:value="${version.version}" th:text="${version.versionName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">银行编号</span>
+                                                </div>
+                                                <select class="form-control selectpicker" multiple aria-describedby
+                                                        data-live-search="true" data-actions-box="true" id="inputAgentid" data-style="btn-light">
+                                                    <option type="checkbox" th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-15">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">付款金额</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="TxAmount" aria-describedby id="inputTxamount">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易时间</span>
+                                                </div>
+                                                <input class="form-control" type="text" aria-describedby name="daterange" id="inputTrandate"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">公私标识</span>
+                                                </div>
+                                                <select class="form-control custom-select"  aria-describedby id="inputPersonflag">
+                                                    <option value="">全部</option>
+                                                    <option value="1">对公支付</option>
+                                                    <option value="2">对私支付</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">完成状态</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputPayprocess">
+                                                    <option value="">全部</option>
+                                                    <option value="0">已完成</option>
+                                                    <option value="1">处理中</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="payInfor_toolbar">
+                                        <button id="payInfor_btn_get" class="btn btn-gradient-success" type="button">
+                                            <i class="fa fa-search-plus fa-1x"></i> 付款交易查询
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="payInfor_table" class="table table-hover w-100 display pb-30"></table>
+                    </section>
+                </div>
+            </div>
+            <div class="modal fade" id="payInfor_inforModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:1500px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title">付款信息</h4>
+                        </div>
+                        <div class="modal-body" th:fragment="payInforDetails" id="payInforDetails">
+                            <div th:if="${payInfor} ne null">
+                                <div th:replace="menu/PayInforDetails :: Model"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <span class="glyphicon"></span>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">关闭窗口</button>
+                            <button type="button" class="btn btn-yellow" id="align">在途校准</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="payInfor_xmlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width:300%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">查看付款报文</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="getform">
+                                <div class="form-group" th:fragment="payInforTranXml" id="payInforTranXml">
+                                    <label for="message_get" class="control-label">报文内容:</label>
+                                    <div class="form-group" th:if="${tranXml} ne null">
+                                        <textarea class="form-control" rows="20" id="message_get" readOnly="true" th:text="${tranXml}"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--</section>-->
+        </div>
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <!--<script th:inline="javascript" type="text/javascript"></script>-->
+            <script type="text/javascript" src="js/PayInfor/PayInfor.js"></script>
+            <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+            <!--<script type="text/javascript" src="vendors/moment/min/moment.min.js"></script>
+            <script type="text/javascript" src="vendors/daterangepicker/daterangepicker.js"></script>
+            <script type="text/javascript" src="dist/js/daterangepicker-data.js"></script>-->
+        <!--</section>-->
+    </body>
+</html>

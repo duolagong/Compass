@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <!--<link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">-->
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div id="payInterpose">
+            <div class="hk-wrapper hk-alt-nav">
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">付款交易</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">付款交易干预</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                    <section class="hk-sec-wrapper">
+                        <div class="hk-pg-header">
+                            <h5 class="hk-pg-title">查询条件</h5>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">支付序号</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Ordernum" aria-describedby id="input_ordernum">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易时间</span>
+                                                </div>
+                                                <input class="form-control" type="text" aria-describedby name="daterange" id="input_trandate"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">共享中心</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="input_version" >
+                                                    <option value="">全部</option>
+                                                    <option th:each="version:${versions}" th:value="${version.version}" th:text="${version.versionName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">银行编号</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="input_agentid">
+                                                    <option value="">全部</option>
+                                                    <option value="102">中国工商银行</option>
+                                                    <option value="103">中国农业银行</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="payInterpose_toolbar">
+                                        <button id="payInterpose_btn_get" class="btn btn-gradient-success" type="button">
+                                            <i class="fa fa-search-plus "></i>&nbsp搜索交易
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="payInterpose_table" class="table mb-0"></table>
+                    </section>
+                </div>
+            </div>
+            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:200%;">
+                        <div class="modal-header">
+                            <h4 class="modal-title">修改交易状态</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="update">
+                                <div class="form-group">
+                                   <!-- <label for="version" class="control-label">共享中心:</label>
+                                    <input type="text" class="form-control" id="version_up" name="version" readOnly="true">
+                                    <label for="subbranchid" class="control-label">企业编号:</label>
+                                    <input type="text" class="form-control" id="subbranchid_up" name="subbranchid" readOnly="true">-->
+                                    <label for="ordernum_up" class="control-label">交易号:</label>
+                                    <input type="text" class="form-control" id="ordernum_up" name="ordernum" readOnly="true">
+                                    <!--<label for="agentid" class="control-label">银行编号:</label>
+                                    <input type="text" class="form-control" id="agentid_up" name="agentid" readOnly="true">-->
+                                    <!--<label for="userID" class="control-label">申请人编号:</label>
+                                    <input type="text" class="form-control" id="userID_up" name="userID">-->
+                                    <label for="code_up" class="control-label">输入验证码:</label>
+                                    <input type="text" class="form-control" id="code_up" name="code">
+                                    <label for="bankCode_up" class="control-label">交易状态:</label>
+                                    <select class="form-control custom-select" aria-describedby id="bankCode_up" style="font-weight: 900">
+                                        <option value="M0999" style="color: #20b426">支付成功</option>
+                                        <option value="E0999" style="color: red">支付失败</option>
+                                    </select>
+                                    <label for="bankMsg_up" class="control-label">交易结果:</label>
+                                    <input type="text" class="form-control" id="bankMsg_up" name="bankFinalMsg">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <span class="glyphicon"></span>
+                            <button type="button" class="btn" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-success" id="modal_btn_up">确定修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <script type="text/javascript" src="js/PayInterpose/PayInterpose.js"></script>
+            <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+        <!--</section>-->
+    </body>
+</html>

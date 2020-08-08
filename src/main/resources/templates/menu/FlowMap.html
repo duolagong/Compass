@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" id="payFlow">
+            <!--<nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item">
+                        <a href="#">系统监控</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">汇款流向</li>
+                </ol>
+            </nav>-->
+            <br/>
+            <div class="container-fluid">
+                <!--<div class="hk-pg-header">
+                    <h2 class="hk-pg-title"><span class="pg-title-icon"><i data-feather="users"></i></span>付款流向</h2>
+                </div>-->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card card-refresh">
+                            <div class="refresh-container">
+                                <div class="loader-pendulums"></div>
+                            </div>
+                            <div class="card-header card-header-action">
+                                <h6>汇款流向</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!--<a class="inline-block mr-15" data-toggle="collapse" href="#collapse_1" aria-expanded="true">
+                                        <i class="zmdi zmdi-chevron-down"></i>
+                                    </a>-->
+                                    <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-radio-button-off"></i>
+                                    </a>
+                                    <a href="#" class="inline-block full-screen mr-15">
+                                        <i class="ion ion-md-expand"></i>
+                                    </a>
+                                    <!--<a class="inline-block card-close" href="#" data-effect="fadeOut">
+                                        <i class="ion ion-md-close"></i>
+                                    </a>-->
+                                </div>
+                            </div>
+                            <div class="card-body pa-0">
+                                <div class="pa-0">
+                                    <div id="FlowMapBig"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/FlowMapBig.js"></script>
+    </body>
+
+</html>

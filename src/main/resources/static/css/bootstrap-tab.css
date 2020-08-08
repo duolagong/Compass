@@ -1,0 +1,6 @@
+/*.nav-link{float:left;}
+.wrap{float:left;}*/
+/*.wrapDel{width:10px;height:10px;margin-left:3px;}
+.wrapDel:hover i{display:block;}
+.wrapDel i{display:none;float:right;}*/
+.nav-tabs li a.nav-link.active i{display:none;}

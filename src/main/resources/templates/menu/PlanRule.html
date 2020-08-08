@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <!-- Toggles CSS -->
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="planPule">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item">
+                        <a href="#">系统任务</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">自动任务</li>
+                </ol>
+            </nav>
+            <div class="container-fluid">
+                <div class="hk-pg-header">
+                    <h2 class="hk-pg-title">
+                        <button class="btn btn-icon btn-icon-circle btn-warning btn-icon-style-3" type="button" data-toggle="collapse" data-target="#planPule_collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="btn-icon-wrap"><i class="fa fa-clock-o fa-2x"></i></span>
+                        </button>&nbsp系统周期任务
+                    </h2>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="collapse" id="planPule_collapseExample">
+                                    <div class="card card-body">
+                                        新增系统任务，使用Quartz格式时间语句。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="hk-sec-wrapper">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="table-responsive">
+                                        <div id="planPule_toolbar">
+                                            <button id="btn_add" type="button" class="btn btn-outline-success">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增任务
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button id="btn_startAll" type="button" class="btn btn-outline-gold">
+                                                <span class="glyphicon glyphicon-play" aria-hidden="true"></span>全部启动
+                                            </button>
+                                            <button id="btn_pauseAll" type="button" class="btn btn-outline-gold">
+                                                <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>全部暂停
+                                            </button>
+                                        </div>
+                                        <table id="planPule_table1" class="table mb-0"></table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 模态框 -->
+                            <div class="modal fade" id="planPule_addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="width:200%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">新增策略信息</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="addform" class="was-validated">
+                                                <div class="form-group">
+                                                    <label for="jobName_add" class="control-label">任务:</label>
+                                                    <input type="text" class="form-control" id="jobName_add" name="jobName_add" required>
+                                                    <label for="cronExpression_add" class="control-label">规则:</label>
+                                                    <input type="text" class="form-control" id="cronExpression_add" placeholder="* * * * * ?" name="cronExpression_add" required>
+                                                    <label for="beanName_add" class="control-label">执行类:</label>
+                                                    <input type="text" class="form-control" id="beanName_add" name="beanName_add" required>
+                                                    <label for="methodName_add" class="control-label">执行方法:</label>
+                                                    <input type="text" class="form-control" id="methodName_add" name="methodName_add" required>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span id="returnMessage" class="glyphicon"></span>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-primary" id="addModal-footer-add">确定新增</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="planPule_upModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="width:200%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">修改策略信息</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <!-- disabled="true/disable" 变灰不可编辑      readOnly="true" 不可编辑 -->
+                                                    <input type="text" class="form-control" id="id_up" name="id_up" hidden>
+                                                    <label for="jobName_up" class="control-label">任务:</label>
+                                                    <input type="text" class="form-control" id="jobName_up" name="jobName_up">
+                                                    <label for="cronExpression_up" class="control-label">规则:</label>
+                                                    <input type="text" class="form-control" id="cronExpression_up" name="cronExpression_up">
+                                                    <label for="beanName_up" class="control-label">执行类:</label>
+                                                    <input type="text" class="form-control" id="beanName_up" name="beanName_up">
+                                                    <label for="methodName_up" class="control-label">执行方法:</label>
+                                                    <input type="text" class="form-control" id="methodName_up" name="methodName_up">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span class="glyphicon"></span>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-primary" id="updateModal-footer-up">确定修改</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+        <script src="js/PlanRule/PlanRule.js"></script>
+            <!--<script src="dist/js/init.js"></script>-->
+            <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>
+        </section>-->
+    </body>
+</html>

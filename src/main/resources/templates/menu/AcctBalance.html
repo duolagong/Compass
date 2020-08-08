@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <!--<link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">-->
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+            <div class="hk-wrapper hk-alt-nav" id="acctBalance">
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">账户信息</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">账户余额</li>
+                    </ol>
+                </nav>
+                <div class="row container-fluid">
+                    <div class="col-sm-8 container-fluid">
+                        <section class="hk-sec-wrapper" id="WeekBalanceChart">
+                            <!--<div id="WeekBalanceChart"></div>-->
+                        </section>
+                    </div>
+                    <div class="col-sm-4 ">
+                        <section class="hk-sec-wrapper">
+                            <div class="hk-pg-header">
+                                <h5 class="hk-pg-title">查询条件</h5>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">所属银行</span>
+                                    </div>
+                                    <select class="form-control custom-select" aria-describedby id="input_agentid">
+                                        <option value="">未选择</option>
+                                        <option th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">银行账号</span>
+                                    </div>
+                                    <select class="form-control" aria-describedby id="input_select_acctid" data-live-search ="true"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">币种类别</span>
+                                    </div>
+                                    <select class="form-control custom-select" aria-describedby id="input_curcode">
+                                        <option value="RMB">RMB</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">查询时间</span>
+                                </div>
+                                <input class="form-control" type="text" aria-describedby name="daterange" id="input_trandate"/>
+                            </div><br>
+                            <div class="input-group">
+                                <button id="acctBalance_btn_show" class="btn btn-success btn-block btn-wth-icon mt-10" type="button">
+                                    <span class="icon-label">
+                                        <i class="fa fa-area-chart"></i>
+                                    </span>
+                                    <span class="btn-text">余额变动展示</span>
+                                </button>
+                                <button id="acctBalance_btn_query" class="btn btn-success btn-block btn-wth-icon mt-10" type="button">
+                                    <span class="icon-label">
+                                        <i class="fa fa-university"></i>
+                                    </span>
+                                    <span class="btn-text">余额在线查询</span>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <section class="hk-sec-wrapper">
+                        <table id="acctBal_table" class="table mb-0"></table>
+                        <br/>
+                    </section>
+                </div>
+                <div class="modal fade" id="acctBalance_queryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:1000px;">
+                            <div class="modal-header">
+                                <h4 class="modal-title">账户余额查询</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="updateform">
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-8">
+                                                <h4><span class="badge badge-soft-green badge-pill">返回报文</span></h4>
+                                                <textarea class="form-control" rows="18" id="resultXml" readOnly="true"></textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" id="queryModal_agentid" readOnly="true" hidden>
+                                                <label for="queryModal_acctid" class="control-label">银行账户:</label>
+                                                <input type="text" class="form-control" id="queryModal_acctid" readOnly="true" disabled="disabled">
+                                                <label for="queryModal_curcode" class="control-label">币种类别:</label>
+                                                <input type="text" class="form-control" id="queryModal_curcode" readOnly="true" disabled="disabled">
+                                                <label for="queryModal_date" class="control-label">交易时间:</label>
+                                                <input class="form-control" type="text" name="daterange" id="queryModal_date"/>
+                                                <br/><br/>
+                                                <button id="acctBalance_btn_1032" class="btn btn-success btn-block btn-wth-icon mt-10" type="button">
+                                                    <span class="icon-label">
+                                                        <i class="fa fa-binoculars"></i>
+                                                    </span>
+                                                    <span class="btn-text">查询账户余额</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <span class="glyphicon"></span>
+                                <button type="button" class="btn btn-gold" data-dismiss="modal">关闭窗口</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <!--<script type="text/javascript" src="dist/js/init.js"></script>-->
+            <!--<script type="text/javascript" src="vendors/echarts/dist/echarts.min.js"></script>
+            <script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
+            <!--<script type="text/javascript" src="js/AcctBalance/AcctBalance.js"></script>-->
+            <script type="text/javascript" src="js/BankTrade/WeekBalance.js"></script>
+            <!--<script type="text/javascript" src="vendors/moment/min/moment.min.js"></script>
+            <script type="text/javascript" src="vendors/daterangepicker/daterangepicker.js"></script>
+            <script type="text/javascript" src="dist/js/daterangepicker-data.js"></script>-->
+        <!--</section>-->
+    </body>
+</html>

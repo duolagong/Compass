@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-table/dist/bootstrap-table.min.css">
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!--<section th:replace="menu/Head :: DIV(~{::div})">-->
+        <div class="hk-wrapper hk-alt-nav" id="acctPower">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">账户权限</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">支付通账户权限</li>
+                </ol>
+            </nav>
+            <div class="container-fluid">
+                <div class="hk-pg-header">
+                    <h2 class="hk-pg-title"><span class="pg-title-icon"><i data-feather="users"></i></span>支付通账户权限</h2>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <p class="mb-40">修改支付通账户权限</p>
+                        <section class="hk-sec-wrapper">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="table-responsive">
+                                        <!--<div id="acctPower_toolbar">
+                                            <button id="btn_update" type="button" class="btn btn-outline-success">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>账户信息修改
+                                            </button>
+                                        </div>-->
+                                        <table id="acctPower_table1" class="table mb-0"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="modal fade" id="acctPower_updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="width:200%;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">修改账户信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <!-- disabled="true/disable" 变灰不可编辑      readOnly="true" 不可编辑 -->
+                                        <label for="version_up" class="control-label">共享中心:</label>
+                                        <input type="text" class="form-control" id="version_up" name="version_up">
+                                        <label for="agentid_up" class="control-label">银行编号:</label>
+                                        <input type="text" class="form-control" id="agentid_up" name="agentid_up">
+                                        <label for="acctid_up" class="control-label">账户号:</label>
+                                        <input type="text" class="form-control" id="acctid_up" name="acctid_up">
+                                        <label for="querypower_up" class="control-label">查询权限:</label>
+                                        <select class="form-control custom-select" id="paypower_up">
+                                            <option value='1'>有权</option>
+                                            <option value="0">无权</option>
+                                        </select>
+                                        <label for="paypower_up" class="control-label">付款权限:</label>
+                                        <select class="form-control custom-select" id="querypower_up">
+                                            <option value='1'>有权</option>
+                                            <option value="0">无权</option>
+                                        </select>
+                                        <label for="billpower_up" class="control-label">电票权限:</label>
+                                        <select class="form-control custom-select" id="billpower_up">
+                                            <option value='1'>有权</option>
+                                            <option value="0">无权</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <span class="glyphicon"></span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" class="btn btn-primary" id="updateModal_btn_up">确定修改</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+            </div>
+        </div>
+    <!--</section>-->
+    <!--<section th:replace="common/JS::common_js(~{::script})">-->
+        <script type="text/javascript">
+            $(function() {
+                $('#acctPower_table1').bootstrapTable({
+                    url: '/acctPower',
+                    method: 'get',
+                    // toolbar: '#acctPower_toolbar #btn_update',
+                    clickEdit: true,
+                    showToggle: true,
+                    pagination: true,
+                    pageSize: 10,
+                    pageList: [10, 20, 50],
+                    showColumns: true,
+                    showPaginationSwitch: false,
+                    showRefresh: true,
+                    clickToSelect: true,  //点击row选中radio或CheckBox
+                    checkbox: true,
+                    singleSelect: true,
+                    showToggle: true,
+                    columns: [{
+                        checkbox: true
+                    }, {
+                        field: 'version',
+                        title: '共享中心',
+                        align : 'center',
+                        width: 100
+                    }, {
+                        field: 'agentid',
+                        title: '银行编号',
+                        align : 'center',
+                        width: 50
+                    }, {
+                        field: 'acctid',
+                        title: '账户号',
+                        align : 'center',
+                        width: 200
+                    }, {
+                        field: 'querypower',
+                        title: '查询权限',
+                        align : 'center',
+                        width: 100,
+                        formatter: acctPowerAnzeige
+                    }, {
+                        field: 'paypower',
+                        title: '付款权限',
+                        align : 'center',
+                        width: 100,
+                        formatter: acctPowerAnzeige
+                    }, {
+                        field: 'billpower',
+                        title: '电票权限',
+                        align : 'center',
+                        width: 100,
+                        formatter: acctPowerAnzeige
+                    }, {
+                        field: 'inputdate',
+                        title: '更新时间',
+                        align : 'center',
+                        width: 200
+                    }, {
+                        field : 'operation',
+                        title : '操作',
+                        align : 'center',
+                        width : 100,
+                        events: acctPowerEvents,
+                        formatter :function (value ,row ,index) {
+                            return [
+                                '<button id=\"line_btn_up\" class=\"btn btn-icon btn-info btn-icon-style-1\"><i class=\"fa fa-cog\"></i></button>',
+                            ].join('');
+                        }
+                    }]
+                });
+            });
+
+            window.acctPowerEvents = {
+                'click #line_btn_up': function (e, value, row, index) {
+                    $("#acctPower_updateModal #version_up").val(row.version);
+                    $("#acctPower_updateModal #agentid_up").val(row.agentid);
+                    $("#acctPower_updateModal #acctid_up").val(row.acctid);
+                    $("#acctPower_updateModal #querypower_up").val(row.querypower);
+                    $("#acctPower_updateModal #paypower_up").val(row.paypower);
+                    $("#acctPower_updateModal #billpower_up").val(row.billpower);
+                    $("#acctPower_updateModal").modal("show");
+                }
+            };
+
+
+            function acctPowerAnzeige(value,row,index){
+                if(value=='1'){
+                    return ['<h3><i style="color:#20b426" class=\"fa fa-check\"></i></h3>'].join();
+                }else{
+                   /* return ['<i style="color: red" class=\"fa fa-close\"></i>'].join();*/
+                    return ['<h3><i style="color: red" class=\"fa fa-close\"></i></h3>'].join();
+                }
+            }
+            /*//修改任务
+            $("#acctPower_toolbar #btn_update").on('click',function() {
+                var rows = $("#acctPower_table1").bootstrapTable('getSelections');
+                if (rows.length != 1) {
+                    alert("请选择一行数据");
+                } else {
+                    $("#version_up").val(rows[0].version);
+                    $("#agentid_up").val(rows[0].agentid);
+                    $("#acctid_up").val(rows[0].acctid);
+                    $("#querypower_up").val(rows[0].querypower);
+                    $("#paypower_up").val(rows[0].paypower);
+                    $("#billpower_up").val(rows[0].billpower);
+                    $("#updateModal").modal("show");
+                }
+            });*/
+            function updateModalbtnup(){
+                console.log($('#acctPower_updateModal_from').serialize());
+            }
+            //修改任务提交按钮
+            $("#acctPower_updateModal #updateModal_btn_up").on('click',function() {
+                debugger;
+                var from=$('#acctPower_updateModal_from').serialize();
+                console.log(from);
+                var version_up = $("#acctPower_updateModal #version_up").val();
+                var agentid_up = $("#acctPower_updateModal #agentid_up").val();
+                var acctid_up = $("#acctPower_updateModal #acctid_up").val();
+                var querypower_up = $("#acctPower_updateModal #querypower_up").val();
+                var paypower_up = $("#acctPower_updateModal #paypower_up").val();
+                var billpower_up = $("#acctPower_updateModal #billpower_up").val();
+                var postData = {
+                    version: version_up,
+                    agentid: agentid_up,
+                    acctid: acctid_up,
+                    querypower: querypower_up,
+                    paypower: paypower_up,
+                    billpower: billpower_up
+                };
+                $.ajax({
+                    type: "PUT",
+                    dataType: "JSON",
+                    url: "/acctPower",
+                    contentType: "application/json",
+                    data: JSON.stringify(postData),
+                    success: function (result) {
+                        myAlert(result.status,result.errMsg);
+                        $("#acctPower_updateModal").modal('hide');//模态框隐藏
+                        //加个刷新
+                        /*$("#acctPower_table1").bootstrapTable('refresh');*/
+                        $('#acctPower button[name="refresh"]').click();
+                    }
+                });
+            });
+        </script>
+        <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    </section>-->
+</body>
+</html>

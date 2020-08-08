@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="css/icon-font.min.css" type='text/css'/>
+    </head>
+    <body>
+        <!--<section th:replace="menu/Head :: DIV(~{::div})">
+            <div class="hk-pg-wrapper">-->
+		<div id="Home" style="transform: translateY(-30px)">
+                <!-- Container -->
+                <div class="container mt-xl-50 mt-sm-30 mt-15">
+                    <!-- Row -->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hk-row">
+                                <div class="col-lg-7">
+                                    <div class="hk-row">
+                                        <div class="col-sm-6">
+                                            <div class="card card-sm">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between mb-5">
+                                                        <div>
+                                                            <span class="d-block font-15 text-dark font-weight-500">日交易量</span>
+                                                        </div>
+                                                        <div>
+                                                            <!--<span class="badge badge-primary  badge-sm">+10%</span>-->
+                                                            <i class="fa fa-university fa-2x"
+                                                               style="color: #ed1b60;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <span class="d-block display-5 text-dark mb-5"
+                                                              th:text="${business}">0
+                                                        </span>
+                                                        <small class="d-block">Daily trading volume</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card card-sm">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between mb-5">
+                                                        <div>
+                                                            <span class="d-block font-15 text-dark font-weight-500">交易超时</span>
+                                                        </div>
+                                                        <div>
+                                                            <!--<span class="badge badge-danger   badge-sm"></span>-->
+                                                            <i class="fa fa-wheelchair-alt fa-2x" style="color: #ed1b60;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <span class="d-block display-5 text-dark mb-5"
+                                                              th:text="${unprocessed}">0
+                                                        </span>
+                                                        <small class="d-block">Transaction timeout</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card card-sm">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between mb-5">
+                                                        <div>
+                                                            <span class="d-block font-15 text-dark font-weight-500">日访问量</span>
+                                                        </div>
+                                                        <div>
+                                                            <!--<span class="badge badge-primary  badge-sm">0</span>-->
+                                                            <i class="fa fa-users fa-2x" style="color: #ed1b60;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <span class="d-block display-5 text-dark mb-5"
+                                                              th:text="${visits}">0
+                                                        </span>
+                                                        <small class="d-block">Daily visits</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card card-sm">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between mb-5">
+                                                        <div>
+                                                            <span class="d-block font-15 text-dark font-weight-500">内存使用率</span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="fa fa-heartbeat fa-2x" style="color: #ed1b60;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <span class="d-block display-5 text-dark mb-5" th:text="${sysPressure}">0
+                                                        </span>
+                                                        <small class="d-block">Memory usage</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card card-refresh" style="margin-right: -30px;margin-left:-72px;">
+                                        <div class="refresh-container">
+                                            <div class="loader-pendulums"></div>
+                                        </div>
+                                        <div class="card-header card-header-action">
+                                            <h5>近七日交易量走势</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="hk-legend-wrap mb-20">
+                                            </div>
+                                            <div id="WeeklyTrading" style="height:350px;"></div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="card" style="margin-right: -30px;margin-left: -72px;">
+                                        <div class="card-header card-header-action">
+                                            <h6>汇款流向</h6>
+                                        </div>
+                                        <div class="card-body pa-0">
+                                            <div class="pa-20">
+                                                &lt;!&ndash;<div id="world_map_marker_1" style="height: 360px"></div>&ndash;&gt;
+                                                <div id="FlowMap" style="height: 430px"></div>
+                                            </div>
+                                            <div class="table-wrap">
+                                                <div class="table-responsive">
+                                                   <table id="flowMap_table" class="table mb-0"></table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="card" style="margin-right: -100px;margin-left: 30px;">
+                                        <div class="card-body">
+                                            <div id="PieChart" style="height: 320px"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card" style="margin-right: -100px;margin-left: 30px;">
+                                        <div class="card-body">
+                                            <div id="LineChart" style="height: 340px;"></div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="card " style="margin-right: -100px;margin-left: 30px;">
+                                        <div class="card-header card-header-action">
+                                            <h6>系统日志</h6>
+                                        </div>
+                                        <div class="card-body" style=" overflow:scroll; width:100%; height:720px; ">
+                                            <div class="user-activity user-activity-sm">
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-success rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>S</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    系统
+                                                                </span>
+                                                                <span class="pl-5">1032自动任务执行完成</span>
+                                                            </span>
+                                                            <span class="d-block font-13">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-success rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>S</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    系统
+                                                                </span>
+                                                                <span class="pl-5">1035自动任务执行完成</span>
+                                                            </span>
+                                                            <span class="d-block font-13 mb-10">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-red rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>E</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    警告
+                                                                </span>
+                                                                <span class="pl-5">生态网出现系统失联</span>
+                                                            </span>
+                                                            <span class="d-block font-13">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-info rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>I</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    信息
+                                                                </span>
+                                                                <span class="pl-5">接收到核心OSB发送的账户明细汇总</span>
+                                                            </span>
+                                                            <span class="d-block font-13">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-info rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>I</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    信息
+                                                                </span>
+                                                                <span class="pl-5">接收到核心OSB发送的账户余额汇总</span>
+                                                            </span>
+                                                            <span class="d-block font-13 mb-10">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-red rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>E</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">警告
+                                                                </span>
+                                                                <span class="pl-5">中国交通银行连接异常,启动舱壁隔离</span>
+                                                            </span>
+                                                            <span class="d-block font-13">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-red rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>E</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    警告
+                                                                </span>
+                                                                <span class="pl-5">中国交通银行连接异常,尝试连接失败</span>
+                                                            </span>
+                                                            <span class="d-block font-13">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-success rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>S</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    系统
+                                                                </span>
+                                                                <span class="pl-5">交易在途已确认完毕</span>
+                                                            </span>
+                                                            <span class="d-block font-13">2020-07-11 16:43:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-success rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>S</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    系统
+                                                                </span>
+                                                                <span class="pl-5"></span>1031自动任务执行完成
+                                                            </span>
+                                                            <span class="d-block font-13">3 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-success rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>S</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    系统
+                                                                </span>
+                                                                <span class="pl-5"></span>1031自动任务执行完成
+                                                            </span>
+                                                            <span class="d-block font-13">3 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media">
+                                                    <div class="media-img-wrap">
+                                                        <div class="avatar avatar-xs">
+                                                            <span class="avatar-text avatar-text-success rounded-circle">
+                                                                <span class="initial-wrap">
+                                                                    <span>S</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <span class="d-block mb-5">
+                                                                <span class="font-weight-500 text-dark text-capitalize">
+                                                                    系统
+                                                                </span>
+                                                                <span class="pl-5"></span>1031自动任务执行完成
+                                                            </span>
+                                                            <span class="d-block font-13">3 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Row -->
+                </div>
+                <!-- Footer -->
+                <div class="hk-footer-wrap container" style="transform: translateY(50px)">
+                    <footer class="footer">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <p>Copyright &copy; 2020. Chen Shi Wen</a></p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                <!-- /Footer -->
+            </div>
+            <!-- /Main Content -->
+            <!--<footer>
+                <p>Copyright &copy; 2020. Chen shi wen</a></p>
+            </footer>-->
+		</div>
+        <!--</section>-->
+        <!--<section th:replace="common/JS::common_js(~{::script})">-->
+            <!--<script src="vendors/echarts/dist/echarts-gl.min.js"></script>
+            <script src="vendors/echarts/dist/ecStat.min.js"></script>
+            <script src="vendors/echarts/dist/dataTool.min.js"></script>
+            <script src="vendors/echarts/dist/china.js"></script>
+            <script src="vendors/echarts/dist/bmap.min.js"></script>-->
+        <!--<script src="vendors/echarts/dist/world.js"></script>-->
+            <!--<script src="/js/jquery.nicescroll.js"></script>-->
+            <script src="js/Home/WeeklyTrading.js"></script>
+            <script src="js/Home/FlowMap.js"></script>
+            <script src="js/Home/PieChart.js"></script>
+            <script src="js/Home/LineChart.js"></script>
+        <!--</section>-->
+    </body>
+</html>

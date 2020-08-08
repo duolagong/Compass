@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <!-- Toggles CSS -->
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="mxContent">
+            <div class="hk-wrapper hk-alt-nav"><!--hk-pg-wrapper-->
+                <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light bg-transparent">
+                        <li class="breadcrumb-item"><a href="#">账户信息</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">账户明细</li>
+                    </ol>
+                </nav>
+                <div class="container-fluid">
+                    <section class="hk-sec-wrapper">
+                        <div class="hk-pg-header">
+                            <h4 class="hk-pg-title"><i class="fa fa-balance-scale"></i>&nbsp账户交易明细</h4>
+                            <!--<h5 class="hk-pg-title">
+                                <button class="btn btn-icon btn-icon-circle btn-warning btn-icon-style-3" type="button" data-toggle="collapse" data-target="#alertRule_collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <span class="btn-icon-wrap"><i class="fa fa-bank fa-2x"></i></span>
+                                </button>&nbsp银企平台-付款交易查询
+                            </h5>-->
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">所属银行</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="input_agentid">
+                                                    <option value="">未选择</option>
+                                                    <option th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">本方账户</span>
+                                                </div>
+                                                <select class="form-control" aria-describedby id="input_select_acctid" data-live-search ="true"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">付款金额</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="TxAmount" aria-describedby id="input_amount">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易时间</span>
+                                                </div>
+                                                <input class="form-control" type="text" name="daterange" id="input_date"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-15">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">唯一标识</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="BankVoucherId" aria-describedby id="input_id">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">借贷标识</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="input_dcFlag">
+                                                    <option value="">全部</option>
+                                                    <option value="D">D-支出</option>
+                                                    <option value="C">C-收入</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">对方账户</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="RecipaccNo" aria-describedby id="input_racctid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="mxContent_toolbar">
+                                        <button id="mxContent_btn_get" class="btn btn-gradient-success" type="button">
+                                            <i class="fa fa-search-plus fa-1x"></i>&nbsp账户明细查询
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="mxContent_table" class="table mb-0"></table>
+                        <br/>
+                    </section>
+                </div>
+            </div>
+            <div class="modal fade" id="mxContent_getModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width:400%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">查看明细报文</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="getform">
+                                <div class="form-group">
+                                    <label for="message_get" class="control-label">报文信息:</label>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="15" id="message_get" readOnly="true"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/BankTrade/MxContent.js"></script>
+    </body>
+</html>
