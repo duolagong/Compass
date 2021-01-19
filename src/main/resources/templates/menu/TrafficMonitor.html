@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" id="sysMemory">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">系统监控</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">流量监控</li>
+                </ol>
+            </nav>
+            <div class="row container-fluid">
+                <div class="col-sm-12 container-fluid">
+                    <section class="hk-sec-wrapper" id="trafficMonitorChart"></section>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="js/TrafficMonitor/TrafficMonitor.js"></script>
+</html>

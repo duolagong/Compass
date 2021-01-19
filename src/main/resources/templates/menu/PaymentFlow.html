@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+        <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+        <link href="vendors/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" id="payFlow">
+            <br/>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card card-refresh bg-blue-dark-5">
+                            <div class="refresh-container">
+                                <div class="loader-pendulums"></div>
+                            </div>
+                            <div class="card-header card-header-action">
+                                <h6 style="color: #fdfdfd">汇款流向</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-radio-button-off"></i>
+                                    </a>
+                                    <a href="#" class="inline-block full-screen mr-15">
+                                        <i class="ion ion-md-expand"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body pa-0">
+                                <div class="pa-0" >
+                                    <div id="mypaymentFlow"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/PaymentFlow/PaymentFlow.js"></script>
+    </body>
+</html>

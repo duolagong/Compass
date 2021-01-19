@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/CSS :: common_header(~{::title},~{::link})">
+        <title>O.Compass</title>
+        <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="hk-wrapper hk-alt-nav" id="sysMemory">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">系统监控</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">内存监控</li>
+                </ol>
+            </nav>
+            <div class="row container-fluid">
+                <div class="col-sm-6 container-fluid">
+                    <section class="hk-sec-wrapper bg-dark-80" id="freeMemoryChart"></section>
+                </div>
+                <div class="col-sm-6 container-fluid">
+                    <section class="hk-sec-wrapper bg-dark-80" id="memoryUtilizationChart"></section>
+                </div>
+                <!--<div class="col-sm-6 container-fluid">
+                    <section class="hk-sec-wrapper bg-dark-80" id="sysMemoryChart3"></section>
+                </div>
+                <div class="col-sm-6 container-fluid">
+                    <section class="hk-sec-wrapper bg-dark-80" id="sysMemoryChart4"></section>
+                </div>-->
+            </div>
+        </div>
+        <script src="vendors/echarts/dist/dark.js"></script>
+        <script src="js/SysMemory/SysMemory.js"></script>
+        <script src="js/SysMemory/UseMemory.js"></script>
+        <script src="js/SysMemory/MemoryUtilization.js"></script>
+    </body>
+</html>

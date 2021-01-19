@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.programme.Fortress.Function.Business.dao.AcctPowerMapper">
+
+    <select id="getSubbranchId" resultType="HashMap">
+        select acc.subbranchid from bnk_acctpower acc where acc.paypower='1'and acc.subbranchid is not null group by acc.subbranchid
+    </select>
+
+</mapper>
