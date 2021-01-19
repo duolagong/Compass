@@ -2,13 +2,10 @@ package com.programme.Fortress.Function.BankTrade.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.programme.Fortress.Function.BankTrade.entity.BankPayment;
 import com.programme.Fortress.Function.Business.dao.BankIdMapper;
-import com.programme.Fortress.Function.Business.dao.PayNoteMapper;
 import com.programme.Fortress.Function.Business.entity.BankId;
-import com.programme.Fortress.Function.Business.entity.PayInfor;
 import com.programme.Fortress.Function.Business.entity.PayNote;
 import com.programme.Fortress.Function.Business.entity.ReturnData;
 import com.programme.Fortress.Function.Business.service.PayNoteService;
@@ -16,20 +13,19 @@ import com.programme.Fortress.Function.ToolCase.dao.SysMessageMapper;
 import com.programme.Fortress.Function.ToolCase.entity.SysMessage;
 import com.programme.Fortress.Other.Feign.ToATOMOSB;
 import com.programme.Fortress.Util.MyDateUtil;
-import com.programme.Fortress.Util.Postman.HttpUtil;
-import com.programme.Fortress.Util.Redis.RedisUtil;
 import com.programme.Fortress.Util.StringUtil;
-import jdk.nashorn.internal.ir.ReturnNode;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import springfox.documentation.spring.web.json.Json;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -73,7 +69,7 @@ public class BankPaymentServiceImpl implements BankPaymentService{
                 selectSql=selectSql+" and bankaccounttype ='"+queryMap.get("bankaccounttype").toString()+"'";
             }
             if(!StringUtil.checkEmpty(queryMap.get("agentid"))){
-                selectSql=selectSql+" and agentid ='"+queryMap.get("agentid").toString()+"'";
+                selectSql=selectSql+" and agentid like'%"+queryMap.get("agentid").toString()+"'";
             }
             if(!StringUtil.checkEmpty(queryMap.get("payresultiswait"))){
                 selectSql=selectSql+" and payresultiswait ='"+queryMap.get("payresultiswait").toString()+"'";
@@ -189,7 +185,7 @@ public class BankPaymentServiceImpl implements BankPaymentService{
     public String getResultQuery(Map queryMap){
         String retrunMsg="";
         try {
-            String resultQueryXml = getResultQueryXml(queryMap.get("txcode").toString(), queryMap.get("agentid").toString(),
+            String resultQueryXml = getResultQueryXml(queryMap.get("version").toString(),queryMap.get("txcode").toString(), queryMap.get("agentid").toString(),
                     queryMap.get("ordernum").toString(), queryMap.get("subbranchid").toString());
             log.info("拼装完成查询[{}]交易结果的报文[{}]",queryMap.get("ordernum"),resultQueryXml);
             if(!resultQueryXml.startsWith("<")) return resultQueryXml;
@@ -208,20 +204,26 @@ public class BankPaymentServiceImpl implements BankPaymentService{
     }
 
     @Override
-    public String getResultQueryXml(String txCode, String agentId, String orderNum, String subBranchId) throws Exception {
+    public String getResultQueryXml(String version,String txCode, String agentId, String orderNum, String subBranchId) throws Exception {
         SysMessage sysMessage = sysMessageMapper.selectOne(new QueryWrapper<SysMessage>()
                 .eq("type", txCode)
                 .eq("message_type", "XML"));
         Document document = DocumentHelper.parseText(sysMessage.getMessage());
         //拼装报文头
         Element rootElement = document.getRootElement();
+        rootElement.element("Head").element("Version").setText(version);
         rootElement.element("Head").element("TxSerial").setText(MyDateUtil.getMaxDate("yyyyMMddhhmmss"));
         rootElement.element("Head").element("TxMoment").setText(MyDateUtil.getMaxDate("yyyyMMddhhmmss"));
         rootElement.element("Head").element("SubBranchId").setText(subBranchId);
-        rootElement.element("Head").element("AgentId").setText("CWGS-666666"+agentId);
+        rootElement.element("Head").element("AgentId").setText(agentId.length()==3 ? "CWGS-666666"+agentId : agentId);
         //拼装报文体
         rootElement.element("Body").element("Record").element("OrderNum").setText(orderNum);
         //生成1030报文
         return StringUtil.xmlFormat(document.asXML());
+    }
+
+    @Async
+    public void sendOSBNotice(String queryXml){
+        atomosb.sendOSBNotice(queryXml);
     }
 }

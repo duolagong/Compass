@@ -14,7 +14,6 @@ public class ToATOMOSBFallbackFactory implements FallbackFactory<ToATOMOSB> {
     public ToATOMOSB create(Throwable throwable) {
         return new ToATOMOSB(){
 
-
             @Override
             public String getData(String messageSql) {
                 log.error("[ToATOMOSB.getData]熔断降级处理",throwable);
@@ -30,6 +29,12 @@ public class ToATOMOSBFallbackFactory implements FallbackFactory<ToATOMOSB> {
             @Override
             public String sendOSBJMS(String message) {
                 log.error("[ToATOMOSB.sendOSBJMS]熔断降级处理",throwable);
+                return "调用异常:"+throwable.getMessage();
+            }
+
+            @Override
+            public String sendOSBNotice(String message) {
+                log.error("[ToATOMOSB.sendOSBNotice]熔断降级处理",throwable);
                 return "调用异常:"+throwable.getMessage();
             }
         };

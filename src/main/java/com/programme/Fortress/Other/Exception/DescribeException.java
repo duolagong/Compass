@@ -1,5 +1,6 @@
 package com.programme.Fortress.Other.Exception;
 
+
 public class DescribeException extends RuntimeException {
 
     private Integer code;

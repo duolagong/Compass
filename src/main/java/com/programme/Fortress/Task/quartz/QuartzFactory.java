@@ -13,7 +13,6 @@ public class QuartzFactory implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         //获取调度数据
         PlanJob planJob = (PlanJob) jobExecutionContext.getMergedJobDataMap().get("planJob");
-
         //获取对应的Bean
         Object object = SpringContextUtil.getBean(planJob.getBeanName());
         try {

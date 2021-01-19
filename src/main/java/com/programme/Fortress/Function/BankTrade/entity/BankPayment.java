@@ -31,12 +31,12 @@ public class BankPayment {
     private String banksyncode;
     private String banksynmsg;
     private String banksynxml;
-    private Date banksyndate;
+    private LocalDateTime banksyndate;
 
     private String bankfinalcode;
     private String bankfinalmsg;
     private String bankfinalxml;
-    private Date bankfinaldate;
+    private LocalDateTime bankfinaldate;
 
     public PayNote payNote; //报文明细
 }

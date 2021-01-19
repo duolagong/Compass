@@ -1,5 +1,4 @@
 $(function () {
-    $("#loading").fadeOut(3000);
     var dom = document.getElementById("tradeAnalysisChat");
     var resizeMainContainer = function () {
         dom.style.width = window.innerWidth+'px';
@@ -12,17 +11,25 @@ $(function () {
         minYear:2017,
         maxYear:parseInt(moment().format('YYYY'),10)
     });
-    var queryDate=$('#tradeAnalysis #inputSingleDate').val();
-    tradeAnalysis(queryDate);
+    /*var queryDate=$('#tradeAnalysis #inputSingleDate').val();
+    tradeAnalysis(queryDate);*/
 });
 
-$("#tradeAnalysis #tradeAnalysis_btn_get").on('click',function(){
+$("#tradeAnalysis #inputSingleDate").on('change',function(){
     $("#loading").fadeIn(500);
     $("#loading").fadeOut(3000);
     $("#tradeAnalysisHide").click();
     var queryDate=$('#tradeAnalysis #inputSingleDate').val();
     tradeAnalysis(queryDate);
 });
+
+/*$("#tradeAnalysis #tradeAnalysis_btn_get").on('click',function(){
+    $("#loading").fadeIn(500);
+    $("#loading").fadeOut(3000);
+    $("#tradeAnalysisHide").click();
+    var queryDate=$('#tradeAnalysis #inputSingleDate').val();
+    tradeAnalysis(queryDate);
+});*/
 
 function tradeAnalysis(queryDate){
     //定义容器大小

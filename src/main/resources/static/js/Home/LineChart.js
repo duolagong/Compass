@@ -17,6 +17,7 @@ $(function () {
                         name: key,
                         type: 'line',
                         stack: '总量',
+                        smooth: true,
                         data: result[key]
                     });
                 }

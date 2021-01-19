@@ -12,13 +12,12 @@ $('#owl_demo_1').owlCarousel({
 });
 
 $('#login-button').click(function (event) {
-	debugger;
 	var userid=document.getElementById("userid").value;
 	var password=document.getElementById("password").value;
 	if(!userid || !password){
 		alert("请输入用户名和密码！");
 	}
 	else{
-		window.parent.location.href="/SysUser/login?userid="+userid+"&password="+password;
+		window.parent.location.href="/sysSafety/login?userid="+userid+"&password="+password;
 	}
 });

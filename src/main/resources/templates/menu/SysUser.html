@@ -40,7 +40,7 @@
                                 <div class="table-responsive">
                                     <div id="sysUser_toolbar">
                                         <button id="sysUser_btn_add" type="button" class="btn btn-gradient-success" data-toggle="modal" data-target="#sysUser_addModal">
-                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp系统用户新增
+                                            <i class="fa fa-user-plus"></i>&nbsp系统用户新增
                                         </button>
                                     </div>
                                     <table id="sysUser_table" class="table mb-0"></table>
@@ -62,13 +62,18 @@
                                                     <input type="text" class="form-control" id="userName_add" name="userName_add" required>
                                                     <label for="phone_add" class="control-label">手机号码:</label>
                                                     <input type="text" class="form-control" id="phone_add" name="phone_add" required>
+                                                    <label for="password_add" class="control-label">用户密码:</label>
+                                                    <input type="text" class="form-control" id="password_add" name="password_add" value="123456">
                                                     <!--<label for="wechat_add" class="control-label">微信编号:</label>
                                                     <input type="text" class="form-control" id="wechat_add" name="wechat_add">-->
-                                                    <label for="userType_add" class="control-label">用户类型:</label>
-                                                    <select class="form-control custom-select" id="userType_add" required>
-                                                        <option value="USER">用 户</option>
-                                                        <option value="ADMIN">管理员</option>
-                                                    </select>
+                                                    <div th:if="${userGrade} eq '1'">
+                                                        <label for="userType_add" class="control-label">用户类型:</label>
+                                                        <select class="form-control custom-select" id="userType_add" required>
+                                                            <option value="3">普通用户</option>
+                                                            <option value="2">高级用户</option>
+                                                            <option value="1">系统管理员</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -91,18 +96,23 @@
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="id_up" name="id_up" hidden>
                                                     <label for="userName_up" class="control-label">用户ID:</label>
-                                                    <input type="text" class="form-control" id="userId_up" name="userId_up" readOnly="true">
+                                                    <input type="text" class="form-control" id="userId_up" name="userId_up" disabled="true/disable">
                                                     <label for="userName_up" class="control-label">用户名称:</label>
                                                     <input type="text" class="form-control" id="userName_up" name="userName_up">
                                                     <label for="phone_up" class="control-label">手机号码:</label>
                                                     <input type="text" class="form-control" id="phone_up" name="phone_up">
+                                                    <label for="password_up" class="control-label">用户密码:</label>
+                                                    <input type="text" class="form-control" id="password_up" name="password_up">
                                                     <!--<label for="wechat_up" class="control-label">微信编号:</label>
                                                     <input type="text" class="form-control" id="wechat_up" name="wechat_up">-->
-                                                    <label for="userType_up" class="control-label">用户类型:</label>
-                                                    <select class="form-control custom-select" id="userType_up" required>
-                                                        <option value="USER">用 户</option>
-                                                        <option value="ADMIN">管理员</option>
-                                                    </select>
+                                                    <div th:if="${userGrade} eq '1'">
+                                                        <label for="userType_up" class="control-label">用户类型:</label>
+                                                        <select class="form-control custom-select" id="userType_up" required>
+                                                            <option value="3">普通用户</option>
+                                                            <option value="2">高级用户</option>
+                                                            <option value="1">系统管理员</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>

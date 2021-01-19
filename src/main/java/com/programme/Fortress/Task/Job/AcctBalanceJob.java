@@ -53,7 +53,7 @@ public class AcctBalanceJob {
                 log.info(bankAcctList.toString());
                 log.info("银行账户存储---------->Redis[{}]", retrunMsg);
                 for (Map map : bankAcctList) {
-                    redisUtil.lSet("ATOM:ICBC:ACCT", map, TimeUnit.MINUTES.toSeconds(30));
+                    redisUtil.lSet("ATOM:ICBC:ACCT", map, TimeUnit.MINUTES.toSeconds(30),true);
                 }
             } catch (Exception e) {
                 log.error("同步银行账户信息失败", e);

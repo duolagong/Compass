@@ -20,13 +20,15 @@
                 <div class="container-fluid">
                     <section class="hk-sec-wrapper">
                         <div class="hk-pg-header">
-                            <h5 class="hk-pg-title">查询条件</h5>
+                            <h4 class="hk-pg-title">
+                                &nbsp支付通汇款查询
+                            </h4>
                         </div>
                         <div class="row">
                             <div class="col-sm">
                                 <form class="needs-validation" novalidate>
                                     <div class="form-row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-9">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="spanOrdernum">支付序号</span>
@@ -37,34 +39,12 @@
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">交易类型</span>
-                                                </div>
-                                                <select class="form-control custom-select" aria-describedby id="inputTxCode">
-                                                    <option value="">全部</option>
-                                                    <option value="1000">资金普通付款</option>
-                                                    <option value="2000">资金监控付款</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
                                                     <span class="input-group-text">共享中心</span>
                                                 </div>
                                                 <select class="form-control selectpicker custom-select" multiple aria-describedby
                                                         data-live-search="true" data-actions-box="true" id="inputVersion">
-                                                    <option th:each="version:${versions}" th:value="${version.version}" th:text="${version.versionName}"></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">银行编号</span>
-                                                </div>
-                                                <select class="form-control selectpicker" multiple aria-describedby
-                                                        data-live-search="true" data-actions-box="true" id="inputAgentid" data-style="btn-light">
-                                                    <option type="checkbox" th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                                    <option th:each="version:${versions}" th:value="${version.version}"
+                                                            th:text="${version.versionName+'('+version.version +')'}"></option>
                                                 </select>
                                             </div>
                                         </div>
@@ -73,17 +53,13 @@
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">付款金额</span>
+                                                    <span class="input-group-text">交易类型</span>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="TxAmount" aria-describedby id="inputTxamount">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">交易时间</span>
-                                                </div>
-                                                <input class="form-control" type="text" aria-describedby name="daterange" id="inputTrandate"/>
+                                                <select class="form-control custom-select" aria-describedby id="inputTxCode">
+                                                    <option value="">全部</option>
+                                                    <option value="1000">资金普通付款</option>
+                                                    <option value="2000">资金监控付款</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -101,20 +77,106 @@
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">完成状态</span>
+                                                    <span class="input-group-text">银行编号</span>
                                                 </div>
-                                                <select class="form-control custom-select" aria-describedby id="inputPayprocess">
-                                                    <option value="">全部</option>
-                                                    <option value="0">已完成</option>
-                                                    <option value="1">处理中</option>
+                                                <select class="form-control selectpicker" multiple aria-describedby
+                                                        data-live-search="true" data-actions-box="true" id="inputAgentid" data-style="btn-light">
+                                                    <option type="checkbox" th:each="agentid:${agentids}" th:value="${agentid.id}" th:text="${agentid.bankname}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">付款单位</span>
+                                                </div>
+                                                <select class="form-control selectpicker custom-select" multiple aria-describedby
+                                                        data-live-search="true" data-actions-box="true" id="inputSubbranchId" data-style="btn-light">
+                                                    <option type="checkbox" th:each="subbranchId:${subbranchIds}" th:value="${subbranchId.SUBBRANCHID}"
+                                                            th:text="${subbranchId.SUBBRANCHID}"></option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-row mt-15">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">最小金额</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="MIN" aria-describedby value="0.00" id="inputAmountMin">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">最大金额</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="MAX" aria-describedby id="inputAmountMax">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">交易时间</span>
+                                                </div>
+                                                <input class="form-control" type="text" aria-describedby name="daterange" id="inputTrandate"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">完成状态</span>
+                                                </div>
+                                                <select class="form-control custom-select" aria-describedby id="inputPayprocess">
+                                                    <option value="">全部</option>
+                                                    <option value="0">交易结束</option>
+                                                    <option value="1">交易在途</option>
+                                                    <option value="2">交易失败</option>
+                                                    <option value="3">交易成功</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-md-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">付款账户</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="" aria-describedby id="inputAcctId">
+                                            </div>
+                                        </div>-->
+                                    </div>
                                     <div id="payInfor_toolbar">
                                         <button id="payInfor_btn_get" class="btn btn-gradient-success" type="button">
-                                            <i class="fa fa-search-plus fa-1x"></i> 付款交易查询
-                                        </button>
+                                            <i class="fa fa-search-plus fa-1x"></i>&nbsp交易指令查询
+                                        </button>&nbsp
+                                        <button aria-expanded="false" data-toggle="dropdown" class="btn btn-gradient-success dropdown-toggle " type="button">
+                                            <i class="fa fa-line-chart fa-1x"></i>&nbsp交易指令分析<span class="caret"></span></button>
+                                        <div role="menu" class="dropdown-menu">
+                                            <a class="dropdown-item" href="#" id="btn-versionNumChart"
+                                                data-toggle="tooltip-info" data-placement="right" title="自由定制项(共享中心，银行编号，交易时间，金额区间，完成状态，公私标识)">
+                                                <i class="fa fa-bar-chart fa-1x"></i>&nbsp交易量情况</a>
+                                            <a class="dropdown-item" href="#" id="btn-numTrendChart"
+                                               data-toggle="tooltip-info" data-placement="right" title="自由定制项(银行编号，交易时间，金额区间，完成状态，公私标识)">
+                                                <i class="fa fa-area-chart"></i>&nbsp交易量走势</a>
+                                            <a class="dropdown-item" href="#" id="btn-personflagChart"
+                                               data-toggle="tooltip-info" data-placement="right" title="自由定制项(共享中心，银行编号，交易时间，金额区间，完成状态)">
+                                                <i class="fa fa-bar-chart fa-1x"></i>&nbsp对公对私交易情况</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#" id="btn-versionChart"
+                                               data-toggle="tooltip-info" data-placement="right" title="自由定制项(共享中心，银行编号，交易时间，金额区间，完成状态，公私标识)">
+                                                <i class="fa fa-bar-chart fa-1x"></i>&nbsp月度交易情况</a>
+                                            <a class="dropdown-item" href="#" id="btn-payDateTrendChart"
+                                               data-toggle="tooltip-info" data-placement="right" title="自由定制项(银行编号，交易时间，金额区间，完成状态，公私标识)">
+                                                <i class="fa fa-area-chart"></i>&nbsp月度交易情况走势</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#" id="btn-proportionChart"
+                                               data-toggle="tooltip-info" data-placement="right" title="暂时未完成开发">
+                                                <i class="fa fa-pie-chart"></i>&nbsp交易量占比</a>
+                                        </div>
+                                        <!--<button id="payInfor_btn_chart2" class="btn btn-gradient-success" type="button">
+                                            <i class="fa fa-graduation-cap fa-1x"></i> 付款交易画像
+                                        </button>-->
                                     </div>
                                 </form>
                             </div>
@@ -131,13 +193,13 @@
                         </div>
                         <div class="modal-body" th:fragment="payInforDetails" id="payInforDetails">
                             <div th:if="${payInfor} ne null">
-                                <div th:replace="menu/PayInforDetails :: Model"></div>
+                                <div th:replace="menu/PayInfor/PayInforDetails :: Model"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <span class="glyphicon"></span>
                             <button type="button" class="btn btn-success" data-dismiss="modal">关闭窗口</button>
-                            <button type="button" class="btn btn-yellow" id="align">在途校准</button>
+                            <button type="button" class="btn btn-yellow" id="payInfor_btn_interpose">在途校准</button>
                         </div>
                     </div>
                 </div>
@@ -164,11 +226,28 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="payInfor_ChartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:1500px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title"><i class="fa fa-line-chart"></i>&nbsp图表分析</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-sm-12 container-fluid" id="payInforChart"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <span class="glyphicon"></span>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">关闭窗口</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <!--</section>-->
         </div>
         <!--<section th:replace="common/JS::common_js(~{::script})">-->
             <!--<script th:inline="javascript" type="text/javascript"></script>-->
             <script type="text/javascript" src="js/PayInfor/PayInfor.js"></script>
+            <script type="text/javascript" src="js/PayInfor/PayInforChart.js"></script>
             <!--<script type="text/javascript" src="vendors/bootstrap-table/dist/bootstrap-table.min.js"></script>-->
             <!--<script type="text/javascript" src="vendors/moment/min/moment.min.js"></script>
             <script type="text/javascript" src="vendors/daterangepicker/daterangepicker.js"></script>

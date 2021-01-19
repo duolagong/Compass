@@ -25,7 +25,7 @@ public class MyAsyncThreadPool {
          * ThreadPoolExecutor.AbortPolicy   丢弃任务并抛出RejectedExecutionException异常
          * ThreadPoolExecutor.DiscardOldestPolicy   丢弃任务但不抛出异常
          * ThreadPoolExecutor.DiscardPolicy     丢弃队列最前面的任务，然后重新尝试执行任务（重复操作）
-         * ThreadPoolExecutor.CallerRunsPolicy      重试添加当前任务，自动重复调用execute()方法，直到成功
+         * ThreadPoolExecutor.CallerRunsPolicy      重试添加当前任务，使用原本调用者的线程来执行
          */
         poolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         poolTaskExecutor.initialize();

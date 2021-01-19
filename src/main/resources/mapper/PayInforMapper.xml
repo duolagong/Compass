@@ -8,10 +8,14 @@
     </select>
 
     <select id="getPayInfor" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="com.programme.Fortress.Function.Business.entity.PayInfor">
-        select * from (select * from( select ROWNUM AS rowno,<include refid="payColumn"/> from bnk_pay_infor pay where to_char(pay.trandate,'yyyy-MM-dd') between #{dateFrom} and #{dateTo}
-        <include refid="condition"/> ) order by trandate )table_alias
+        select * from (select * from( select ROWNUM AS rowno,
+        <include refid="payColumn"/>
+        from bnk_pay_infor pay where to_char(pay.trandate,'yyyy-MM-dd')
+        between #{dateFrom} and #{dateTo}
+        <include refid="condition"/>
+        ) order by trandate )table_alias
         where table_alias.rowno between ${offset}+1 and ${offset}+${limit}
-	</select>
+    </select>
 
     <select id="getOrdernumInforCount" parameterType="java.util.HashMap" resultType="int">
         select count(ordernum) from bnk_pay_infor where (version ='21' or txcode='2000')
@@ -51,6 +55,133 @@
             (select n.ordernum from bnk_pay_note n where n.espdate=replace(#{nowDate,jdbcType=VARCHAR},'-',''))
     </select>
 
+    <select id="getPayDateTrendChart" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="java.util.HashMap">
+        select to_char(pay.trandate, 'yyyy-MM-dd') as paydate,count(to_char(pay.trandate, 'yyyy-MM-dd')) as num, ROUND(sum(pay.txamount)/10000,2) as total
+        from bnk_pay_infor pay
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <include refid="payInfrChart"></include>
+            and to_char(pay.trandate, 'yyyy-MM-dd') between #{dateFrom} and #{dateTo} group by to_char(pay.trandate, 'yyyy-MM-dd') order by paydate
+        </trim>
+    </select>
+
+    <select id="getNumTrendChart" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="java.util.HashMap">
+        select to_char(pay.trandate, 'yyyy-MM-dd') as paydate,count(to_char(pay.trandate, 'yyyy-MM-dd')) as num
+        from bnk_pay_infor pay
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <include refid="payInfrChart"></include>
+            and to_char(pay.trandate, 'yyyy-MM-dd') between #{dateFrom} and #{dateTo} group by to_char(pay.trandate, 'yyyy-MM-dd') order by paydate
+        </trim>
+    </select>
+
+    <select id="getVersionChart" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="java.util.HashMap">
+        select g.F_QYMC name,v.* from (select version, ROUND(sum(pay.txamount)/10000, 2) total, count(version) num from bnk_pay_infor pay
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="versions != null and versions.length>0">
+                and pay.version in
+                <foreach item="versions" index="index" collection="versions" open="（" separator="," close="）">
+                    #{versions}
+                </foreach>
+            </if>
+            <include refid="payInfrChart"></include>
+            and to_char(pay.trandate, 'yyyy-MM-dd') between #{dateFrom} and #{dateTo} group by version)v left join BNK_GSBH g ON v.VERSION=g.F_QYBH
+            order by v.version
+        </trim>
+    </select>
+
+    <select id="getVersionnNumChart" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="java.util.HashMap">
+        select g.F_QYMC name,v.* from (select version, count(version) num from bnk_pay_infor pay
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="versions != null and versions.length>0">
+                and pay.version in
+                <foreach item="versions" index="index" collection="versions" open="（" separator="," close="）">
+                    #{versions}
+                </foreach>
+            </if>
+            <include refid="payInfrChart"></include>
+            and to_char(pay.trandate, 'yyyy-MM-dd') between #{dateFrom} and #{dateTo} group by version)v left join BNK_GSBH g ON v.VERSION=g.F_QYBH
+            order by v.version
+        </trim>
+    </select>
+
+    <select id="getVersionnTotalChart" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="java.util.HashMap">
+        select g.F_QYMC name,v.* from (select version, ROUND(sum(pay.txamount)/10000, 2) total from bnk_pay_infor pay
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="versions != null and versions.length>0">
+                and pay.version in
+                <foreach item="versions" index="index" collection="versions" open="（" separator="," close="）">
+                    #{versions}
+                </foreach>
+            </if>
+            <include refid="payInfrChart"></include>
+            and to_char(pay.trandate, 'yyyy-MM-dd') between #{dateFrom} and #{dateTo} group by version)v left join BNK_GSBH g ON v.VERSION=g.F_QYBH
+            order by v.version
+        </trim>
+    </select>
+
+    <sql id="payInfrChart">
+        <if test="agentids !=null and agentids.length>0">
+            and agentid in
+            <foreach item="agentids" index="index" collection="agentids" open="(" separator="," close=")">
+                #{agentids}
+            </foreach>
+        </if>
+        <if test="payprocess !=null and payprocess !=''">
+            <choose>
+                <when test="payprocess =='2'.toString()">
+                    and pay.payprocess = '0' and (pay.bankfinalcode is null or pay.bankfinalcode not like 'M%')
+                </when>
+                <when test="payprocess =='3'.toString()">
+                    and pay.payprocess = '0' and pay.bankfinalcode like 'M%'
+                </when>
+                <otherwise>
+                    and pay.payprocess =#{payprocess}
+                </otherwise>
+            </choose>
+        </if>
+        <if test="personflag !=null and personflag !=''">
+            and personflag =#{personflag}
+        </if>
+        <if test="amountMax !=null and amountMax !=''">
+            and to_number(pay.txamount) between ${amountMin} and ${amountMax}
+        </if>
+    </sql>
+
+    <select id="getPersonflagChart" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="java.util.HashMap">
+        select g.F_QYMC name,v.* from (select pay.version, sum(decode(pay.personflag,2,1,0)) as person, sum(decode(pay.personflag,2,0,1)) as noperson from bnk_pay_infor pay
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="versions != null and versions.length>0">
+                and pay.version in
+                <foreach item="versions" index="index" collection="versions" open="（" separator="," close="）">
+                    #{versions}
+                </foreach>
+            </if>
+            <if test="payprocess !=null and payprocess !=''">
+                <choose>
+                    <when test="payprocess =='2'.toString()">
+                        and pay.payprocess = '0' and (pay.bankfinalcode is null or pay.bankfinalcode not like 'M%')
+                    </when>
+                    <when test="payprocess =='3'.toString()">
+                        and pay.payprocess = '0' and pay.bankfinalcode like 'M%'
+                    </when>
+                    <otherwise>
+                        and pay.payprocess =#{payprocess}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="agentids !=null and agentids.length>0">
+                and pay.agentid in
+                <foreach collection="agentids" item="agentids" index="index" open="(" separator="," close=")">
+                    #{agentids}
+                </foreach>
+            </if>
+            <if test="amountMax !=null and amountMax !=''">
+                and to_number(pay.txamount) between ${amountMin} and ${amountMax}
+            </if>
+            and to_char(pay.trandate, 'yyyy-MM-dd') between #{dateFrom} and #{dateTo}  group by version)v left join BNK_GSBH g ON v.VERSION=g.F_QYBH
+            order by v.version
+        </trim>
+    </select>
+
     <sql id="payColumn">
         pay.ordernum,pay.version,pay.agentid,pay.personflag,pay.txmoment,pay.subbranchid,pay.txamount,pay.trandate,pay.payprocess,pay.txcode,pay.bankfinalcode
     </sql>
@@ -71,50 +202,34 @@
                 #{agentids}
             </foreach>
         </if>
+        <if test="subbranchids !=null and subbranchids.length>0">
+            and subbranchid in
+            <foreach item="subbranchids" index="index" collection="subbranchids" open="(" separator="," close=")">
+                #{subbranchids}
+            </foreach>
+        </if>
         <if test="txcode !=null and txcode !=''">
             and txcode =#{txcode}
         </if>
         <if test="payprocess !=null and payprocess !=''">
-            and payprocess =#{payprocess}
-        </if>
-        <if test="txamount !=null and txamount !=''">
-            and txamount like '%${txamount}%'
+            <choose>
+                <when test="payprocess =='2'.toString()">
+                    and payprocess = '0' and (bankfinalcode is null or bankfinalcode not like 'M%')
+                </when>
+                <when test="payprocess =='3'.toString()">
+                    and payprocess = '0' and bankfinalcode like 'M%'
+                </when>
+                <otherwise>
+                    and payprocess =#{payprocess}
+                </otherwise>
+            </choose>
         </if>
         <if test="personflag !=null and personflag !=''">
             and personflag =#{personflag}
         </if>
-    </sql>
-
-    <sql id="whereParams">
-        <if test="ordernum !=null and ordernum !=''">
-            and ordernum in
-            <foreach item="ordernum" index="index" collection="list" open="(" separator="," close=")">
-                ${ordernum}
-            </foreach>
-        </if>
-        <if test="version != null and ordernum !=''">
-            and version in
-            <foreach item="version" index="index" collection="list" open="(" separator="," close=")">
-                ${version}
-            </foreach>
-        </if>
-        <if test="agentid !=null and agentid !=''">
-            and agentid in
-            <foreach item="agentid" index="index" collection="list" open="(" separator="," close=")">
-                ${agentid}
-            </foreach>
-        </if>
-        <if test="txcode !=null and agentid !=''">
-            and txcode =${txcode}
-        </if>
-        <if test="payprocess !=null and payprocess !=''">
-            and payprocess =${payprocess}
-        </if>
-        <if test="txamount !=null and txamount !=''">
-            and payprocess =${payprocess}
-        </if>
-        <if test="personflag !=null and personflag !=''">
-            and personflag =${personflag}
+        <if test="amountMax !=null and amountMax !=''">
+            and to_number(txamount) between ${amountMin} and ${amountMax}
         </if>
     </sql>
+    
 </mapper>

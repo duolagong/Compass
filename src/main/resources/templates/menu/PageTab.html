@@ -40,36 +40,6 @@
                         tab.addTab({id: id, text: name, closeable: true, url: '/'+id});
                     }
                 }
-
-                function myAlert(starts , alertMsg) {
-                    $.toast().reset('all');
-                    $("body").removeAttr('class');
-                    if(starts){
-                        $.toast({
-                            heading: '执行成功',
-                            text: '<i class="jq-toast-icon fa fa-check fa-2x"></i><h2>'+alertMsg+'</h2>',
-                            position: 'top-right',
-                            loaderBg:'#7a5449',
-                            class: 'jq-has-icon jq-toast-success',
-                            hideAfter: 3000,
-                            stack: 12,
-                            showHideTransition: 'fade'
-                        });
-                    }else {
-                        alert(alertMsg);
-                        // $.toast({
-                        //     heading: '发生异常',
-                        //     text: '<i class="jq-toast-icon fa fa-check fa-2x"></i><h2>'+alertMsg+'</h2>',
-                        //     position: 'top-right',
-                        //     loaderBg:'#7a5449',
-                        //     class: 'jq-has-icon jq-toast-error',
-                        //     hideAfter: 7000,
-                        //     stack: 12,
-                        //     showHideTransition: 'fade'
-                        // });
-                    }
-                    return false;
-                }
             </script>
             <!--<script src="vendors/jquery/dist/jquery.min.js"></script>
             <script type="text/javascript" src="dist/js/init.js"></script>-->

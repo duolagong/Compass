@@ -52,15 +52,17 @@ public class QuartzServiceImpl implements QuartzService {
     @Override
     public void addJob(PlanJob job) {
         try {
-            //创建触发器
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName())
+            /**
+             * 创建触发器
+             */
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName())//定义名字/group
                     .withSchedule(CronScheduleBuilder.cronSchedule(job.getCronExpression()))
                     .startNow()
                     .build();
 
             //创建任务
-            JobDetail jobDetail = JobBuilder.newJob(QuartzFactory.class)
-                    .withIdentity(job.getJobName())
+            JobDetail jobDetail = JobBuilder.newJob(QuartzFactory.class)//定义Job类为QuartzFactory类，真正的逻辑执行
+                    .withIdentity(job.getJobName())//定义名字/group
                     .build();
 
             //传入调度的数据，在QuartzFactory中需要使用

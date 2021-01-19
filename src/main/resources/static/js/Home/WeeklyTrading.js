@@ -18,6 +18,7 @@ $(function () {
                         type: 'line',
                         stack: '总量',
                         areaStyle: {},
+                        smooth: true,
                         data: result[key]
                     });
                 }

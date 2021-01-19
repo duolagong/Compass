@@ -1,7 +1,7 @@
 package com.programme.Fortress.Function.Business.action;
 
 import com.alibaba.fastjson.JSONObject;
-import com.programme.Fortress.Function.Business.service.ErpInforService;
+import com.programme.Fortress.Function.Business.service.ErpInfor.ErpInforService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

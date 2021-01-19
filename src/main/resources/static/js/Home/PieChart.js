@@ -1,3 +1,4 @@
+/*setInterval*/
 $(function() {
     var myChart = echarts.init(document.getElementById("PieChart"));
     var app = {};

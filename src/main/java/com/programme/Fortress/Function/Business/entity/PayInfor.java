@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -59,14 +60,22 @@ public class PayInfor {
     @TableField(exist = false)
     private String[] agentids;
     @TableField(exist = false)
+    private String[] subbranchids;
+    @TableField(exist = false)
     private String dateFrom;
     @TableField(exist = false)
     private String dateTo;
     @TableField(exist = false)
-    public int limit; //每页的条数
+    private int limit; //每页的条数
     @TableField(exist = false)
-    public int offset; //数据库查询索引
+    private int offset; //数据库查询索引
     @TableField(exist = false)
-    public PayNote payNote; //报文明细
+    private PayNote payNote; //报文明细
+    @TableField(exist = false)
+    private String user_id; //用户ID
+    @TableField(exist = false)
+    private BigDecimal amountMin;
+    @TableField(exist = false)
+    private BigDecimal amountMax;
 
 }

@@ -5,7 +5,7 @@
     <select id="getPayInforCount" parameterType="com.programme.Fortress.Function.Business.entity.PayInfor" resultType="int">
         select count(ordernum) from (
             select pay.ordernum
-                from bnk_pay_infor pay inner join bnk_pay_interpose i on pay.ordernum=i.ordernum where pay.payprocess ='1'
+                from bnk_pay_infor pay inner join bnk_pay_interpose i on pay.ordernum=i.ordernum where pay.payprocess ='1' and i.submit_id = #{user_id}
                 union
             select pay.ordernum
                 from bnk_pay_infor pay where to_char(pay.trandate,'yyyy-MM-dd') between #{dateFrom} and #{dateTo}
@@ -18,7 +18,7 @@
         select * from (
             select ROWNUM AS rowno,table_alias.* from (
                 select <include refid="payColumn"/> ,submit_name
-                    from bnk_pay_infor pay inner join bnk_pay_interpose i on pay.ordernum=i.ordernum where pay.payprocess ='1'
+                    from bnk_pay_infor pay inner join bnk_pay_interpose i on pay.ordernum=i.ordernum where pay.payprocess ='1' and i.submit_id = #{user_id}
                     union all
                 select * from (
                     select <include refid="payColumn"/>,'System' as submit_name

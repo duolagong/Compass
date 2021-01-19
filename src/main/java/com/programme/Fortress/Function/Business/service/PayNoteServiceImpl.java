@@ -123,7 +123,7 @@ public class PayNoteServiceImpl implements PayNoteService {
                 redisUtil.expire("COM:CITY:PAMOUNT",timeInterval);
             }
             //添加Ordernum到(City_地区码)
-            redisUtil.lSet("COM:CITY:" + code, payNote.getOrderNum());
+            redisUtil.lSet("COM:CITY:" + code, payNote.getOrderNum(),true);
             long timeInterval = MyDateUtil.getTimeInterval(MyDateUtil.getMaxDate("yyyyMMdd")+ " " + "23:59:59","yyyyMMdd hh:mm:ss");
             redisUtil.expire("COM:CITY:" + code,timeInterval);
         }catch (Exception e){

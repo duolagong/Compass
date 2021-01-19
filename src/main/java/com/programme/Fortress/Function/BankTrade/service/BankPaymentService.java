@@ -15,5 +15,7 @@ public interface BankPaymentService {
 
     String getResultQuery(Map queryMap);
 
-    String getResultQueryXml(String txCode,String agentId,String orderNum ,String subBranchId) throws Exception;
+    String getResultQueryXml(String version, String txCode, String agentId, String orderNum, String subBranchId) throws Exception;
+
+    void sendOSBNotice(String queryXml);
 }

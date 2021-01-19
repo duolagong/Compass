@@ -1,31 +1,21 @@
 package com.programme.Fortress.Function.Business.action;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.mchange.util.ByteArrayMap;
 import com.programme.Fortress.Function.Business.dao.BankIdMapper;
-import com.programme.Fortress.Function.Business.dao.CityMapper;
 import com.programme.Fortress.Function.Business.entity.BankId;
-import com.programme.Fortress.Function.Business.entity.City;
-import com.programme.Fortress.Function.Business.entity.PayInterpose;
-import com.programme.Fortress.Function.Business.service.ErpInforService;
 import com.programme.Fortress.Function.Business.service.HomeService;
-import com.programme.Fortress.Function.Business.service.PayNoteService;
 import com.programme.Fortress.Util.Redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -53,15 +43,6 @@ public class HomeAction {
         model.addAttribute("unprocessed",homeMonitor.get("unprocessed"));
         model.addAttribute("sysPressure",homeMonitor.get("sysPressure"));
         return "menu/Home";
-    }
-
-    /**
-     * 汇款流向
-     * @return
-     */
-    @GetMapping(value = "/flowMap")
-    public @ResponseBody JSONObject flowMapShow(){
-        return homeService.flowMapShow();
     }
 
     /**
@@ -98,7 +79,7 @@ public class HomeAction {
             HashMap<Object, Object> hashMap = new HashMap<>();
             hashMap.put("bank",bankId.getBank());
             hashMap.put("name",bankId.getBankname());
-            boolean b = redisUtil.lSet("ATOM:ICBC:ACCT", hashMap);
+            boolean b = redisUtil.lSet("ATOM:ICBC:ACCT", hashMap,true);
             log.info("结果[{}]"+b);
         }
         List<Object> objectList = redisUtil.lGet("ATOM:ICBC:ACCT", 0, -1);

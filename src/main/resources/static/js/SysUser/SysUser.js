@@ -14,11 +14,10 @@ window.sysUserEvents = {
         $("#sysUser_upModal #phone_up").val(row.phone);
         $("#sysUser_upModal  #wechat_up").val(row.wechat);
         $("#sysUser_upModal  #userType_up").val(row.userType);
-        $("#sysUser_upModal  #password_up").val(row.password);
         $("#sysUser_upModal").modal("show");
     },'click #deleteBtn': function (e, value, row, index) {
-        if(row.userType == 'ADMIN'){
-            alert("无法删除管理员用户");
+        if(row.userType == '1'){
+            alert("不允许删除管理员用户");
             return false;
         }
         var mymessage = confirm("确认删除 "+row.userName+" 用户?");
@@ -42,7 +41,7 @@ $('#sysUser #btn_add').on('click',function () {
     $("#sysUser_addModal").modal("show");
 });
 
-//修改任务提交按钮
+//修改用户提交按钮
 $("#sysUser_upModal #updateModal-footer-up").on('click',function(){
     var id_up=$("#sysUser_upModal #id_up").val();
     var userId_up=$("#sysUser_upModal #userId_up").val();
@@ -50,7 +49,11 @@ $("#sysUser_upModal #updateModal-footer-up").on('click',function(){
     var phone_up=$("#sysUser_upModal #phone_up").val();
     var wechat_up=$("#sysUser_upModal #wechat_up").val();
     var userType_up=$("#sysUser_upModal #userType_up").val();
-    var postData={id:id_up,userId:userId_up,userName:userName_up,phone:phone_up,wechat:wechat_up,userType:userType_up};
+    if (!userType_up) {
+        userType_up='3';
+    }
+    var password_up=$("#sysUser_upModal #password_up").val();
+    var postData={id:id_up,userId:userId_up,userName:userName_up,phone:phone_up,wechat:wechat_up,userType:userType_up,password:password_up};
     $.ajax({
         type:"put",
         dataType:"JSON",
@@ -64,7 +67,7 @@ $("#sysUser_upModal #updateModal-footer-up").on('click',function(){
         }
     });
 });
-//新增任务
+//新增用户
 $("#sysUser_addModal #addModal-footer-add").on('click',function(){
     var userId_add = $("#sysUser_addModal #userId_add").val();
     if (!userId_add) {
@@ -84,7 +87,11 @@ $("#sysUser_addModal #addModal-footer-add").on('click',function(){
     var wechat_add = $("#sysUser_addModal #wechat_add").val();
     var userType_add = $("#sysUser_addModal #userType_add").val();
     if (!userType_add) {
-        alert("用户类型不能为空");
+        userType_add='3';
+    }
+    var password_add = $("#sysUser_addModal #password_add").val();
+    if (!password_add) {
+        alert("用户密码不能为空");
         return false;
     }
     $.ajax({
@@ -97,7 +104,8 @@ $("#sysUser_addModal #addModal-footer-add").on('click',function(){
             userName : userName_add,
             phone : phone_add,
             wechat : wechat_add,
-            userType : userType_add
+            userType : userType_add,
+            password : password_add
         }),
         success : function(result) {
             myAlert(result.status,result.errMsg);
@@ -109,6 +117,7 @@ $("#sysUser_addModal #addModal-footer-add").on('click',function(){
 
 //构造表格
 $(function() {
+    /*var sysUserName = $("#sysUserName").text();*/
     let $table = $('#sysUser #sysUser_table');
     $table.bootstrapTable({
         url: '/sysUser',
@@ -159,10 +168,12 @@ $(function() {
             align : 'center',
             width: 100 ,
             formatter: function (value, row, index) {
-                if (value == 'USER') {
-                    return ['<h3><i style="color:#20b426" class=\"fa fa-user\"></i></h3>'].join();
-                } else {
-                    return ['<h3><i style="color: #f44336" class=\"fa fa-user-secret\"></i></h3>'].join();
+                if (value == '3') {
+                    return ['<h3><i style="color:rgba(53,162,255,0.98)" class=\"fa fa-group\"></i></h3>'].join();
+                } else if(value == '2'){
+                    return ['<h3><i style="color: #f4231b" class=\"fa fa-user\"></i></h3>'].join();
+                }else {
+                    return ['<h3><i style="color: #000000" class=\"fa fa-user-secret\"></i></h3>'].join();
                 }
             }
         },{

@@ -17,4 +17,5 @@ public class AcctPower {
     private String version;
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime inputdate;
+    private String subbranchid;
 }

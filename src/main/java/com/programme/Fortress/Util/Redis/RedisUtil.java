@@ -1,11 +1,13 @@
 package com.programme.Fortress.Util.Redis;
 
 import com.programme.Fortress.Other.Redis.Status;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -428,6 +430,16 @@ public class RedisUtil {
         return arrayList;
     }
 
+    public ArrayList<Double> zList(String key){
+        ArrayList<Double> doubleList = new ArrayList<>();
+        Cursor<ZSetOperations.TypedTuple<Object>> cursor = redisTemplate.opsForZSet().scan(key, ScanOptions.NONE);
+        while (cursor.hasNext()){
+            ZSetOperations.TypedTuple<Object> item = cursor.next();
+            doubleList.add(item.getScore());
+        }
+        return doubleList;
+    }
+
     /**
      * 通过索引区间返回有序集合成指定区间内的成员，其中有序集成员按分数值递减(从大到小)顺序排列
      * @param key
@@ -496,9 +508,13 @@ public class RedisUtil {
      * @param value 值
      * @return
      */
-    public boolean lSet(String key, Object value) {
+    public boolean lSet(String key, Object value,Boolean right) {
         try {
-            redisTemplate.opsForList().rightPush(key, value);
+            if(right){
+                redisTemplate.opsForList().rightPush(key, value);
+            }else {
+                redisTemplate.opsForList().leftPush(key, value);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -513,9 +529,13 @@ public class RedisUtil {
      * @param time 时间(秒)
      * @return
      */
-    public boolean lSet(String key, Object value, long time) {
+    public boolean lSet(String key, Object value, long time,Boolean right) {
         try {
-            redisTemplate.opsForList().rightPush(key, value);
+            if(right){
+                redisTemplate.opsForList().rightPush(key, value);
+            }else {
+                redisTemplate.opsForList().leftPush(key, value);
+            }
             if (time > 0) {
                 expire(key, time);
             }
@@ -532,9 +552,13 @@ public class RedisUtil {
      * @param value 值
      * @return
      */
-    public boolean lSet(String key, List<Object> value) {
+    public boolean lSet(String key, List<Object> value, Boolean right) {
         try {
-            redisTemplate.opsForList().rightPushAll(key, value);
+            if(right){
+                redisTemplate.opsForList().rightPushAll(key, value);
+            }else {
+                redisTemplate.opsForList().leftPushAll(key, value);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -549,9 +573,13 @@ public class RedisUtil {
      * @param time 时间(秒)
      * @return
      */
-    public boolean lSet(String key, List<Object> value, long time) {
+    public boolean lSet(String key, List<Object> value, long time, Boolean right) {
         try {
-            redisTemplate.opsForList().rightPushAll(key, value);
+            if (right) {
+                redisTemplate.opsForList().rightPushAll(key, value);
+            } else {
+                redisTemplate.opsForList().leftPushAll(key, value);
+            }
             if (time > 0) {
                 expire(key, time);
             }
@@ -576,6 +604,26 @@ public class RedisUtil {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * 删除集合最右边或最左边的数据
+     * @param key
+     * @param right
+     * @return
+     */
+    public Object lRemove(String key, Boolean right){
+        try {
+            if(right){
+                redisTemplate.opsForList().rightPop(key);
+            }else {
+                redisTemplate.opsForList().leftPop(key);
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 

@@ -15,4 +15,7 @@ public interface ToATOMOSB {
 
     @PostMapping(value = "/HTKG/Interface/ToMyServer")
     String sendOSBJMS(String message);
+
+    @PostMapping(value = "/HTKG/ERPNoticeReceiver")
+    String sendOSBNotice(String message);
 }

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>O.Compass</title>
-    <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- Custom CSS -->
     <link href="dist/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -17,16 +15,16 @@
                 <a class="d-flex text-white auth-brand" href="#">
                     O.Compass
                 </a>
-                <div class="btn-group btn-group-sm">
-                    <a href="#" class="btn btn-outline-secondary">Help</a>
-                    <a href="#" class="btn btn-outline-secondary">About Us</a>
+                <div class="btn-group btn-group-sm" style="color: #080808">
+                    <a href="#" class="btn btn-outline-secondary">帮助</a>
+                    <a href="#" class="btn btn-outline-secondary">关于我们</a>
                 </div>
             </header>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-5 pa-0">
                         <div id="owl_demo_1" class="owl-carousel dots-on-item owl-theme">
-                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(img/zc1.jpg);">
+                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(img/osb3.jpg);">
                                 <div class="auth-cover-info py-xl-0 pt-100 pb-50">
                                     <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
                                         <h1 class="display-3 text-white mb-20"></h1>
@@ -35,7 +33,7 @@
                                 </div>
                                 <div class="bg-overlay bg-trans-dark-50"></div>
                             </div>
-                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(img/zc2.jpg);">
+                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(img/osb2.jpg);">
                                 <div class="auth-cover-info py-xl-0 pt-100 pb-50">
                                     <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
                                         <h1 class="display-3 text-white mb-20"></h1>
@@ -50,8 +48,9 @@
                         <div class="auth-form-wrap py-xl-0 py-50">
                             <div class="auth-form w-xxl-55 w-xl-75 w-sm-90 w-xs-100">
                                 <form>
-                                    <h1 class="display-4 mb-10">O.Compass</h1>
-                                    <p class="mb-30">监控系统</p>
+                                    <h1 class="display-3 mb-10">O.Compass</h1>
+                                    <p class="mb-20" style="color: #080808">监控系统</p>
+                                    <p class="mb-20 text-red" th:text="${indexRemind}"></p>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="用户名" id="userid">
                                     </div>
@@ -66,27 +65,11 @@
                                     </div>
                                     <div class="custom-control custom-checkbox mb-25">
                                         <input class="custom-control-input" id="same-address" type="checkbox" checked>
-                                        <label class="custom-control-label font-14" for="same-address">Keep me logged
-                                            in</label>
+                                        <label class="custom-control-label font-14" for="same-address">记住密码</label>
                                     </div>
-                                    <!--<p class="font-14 text-center mt-15">涉及组件</p>-->
-                                    <!--<div class="option-sep">cover</div>
-                                    <div class="row">
-                                        <div class="col-xl-3">
-                                            <p class="font-14 text-center mt-15"><i class="fa fa-dashboard"></i> 系统监控</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="font-14 text-center mt-15"><i class="fa fa-exclamation-triangle"></i> 消息预警</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="font-14 text-center mt-15"><i class="fa fa-institution"></i> 支付信息</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="font-14 text-center mt-15"><i class="fa fa-line-chart"></i> 数据分析</p>
-                                        </div>
-                                    </div>-->
+
                                 </form>
-                                <button class="btn btn-blue btn-block" id="login-button">登录</button>
+                                <button class="btn btn-gradient-info btn-block" id="login-button">登录</button>
                             </div>
                         </div>
                     </div>
@@ -95,26 +78,13 @@
         </div>
         <!-- /Main Content -->
     </div>
-    <!-- /HK Wrapper -->
-    <!-- jQuery -->
     <script src="/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
     <script src="/vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Slimscroll JavaScript -->
     <script src="/dist/js/jquery.slimscroll.js"></script>
-
-    <!-- Fancy Dropdown JS -->
     <script src="/dist/js/dropdown-bootstrap-extended.js"></script>
-
-    <!-- Owl JavaScript -->
     <script src="/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
-
-    <!-- FeatherIcons JavaScript -->
     <script src="/dist/js/feather.min.js"></script>
-
-    <!-- Init JavaScript -->
     <script src="/dist/js/init.js"></script>
     <script src="/dist/js/login-data.js"></script>
 </body>

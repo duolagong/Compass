@@ -138,7 +138,7 @@ function getNoticeSend() {
                     return '<h6 style="color: #ffc107">在途</h6>';
                 }else{
                     var finalcode=row['bankfinalcode'];
-                    if(finalcode == null || finalcode==""){
+                    if(!finalcode){
                         return '<h6 style="color: #f44336">付款失败</h6>';
                     }else if(finalcode.startsWith("M")){
                         return '<h6 style="color: #aed67e">付款成功</h6>';

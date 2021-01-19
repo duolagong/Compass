@@ -19,7 +19,6 @@ $(function(){
 	var myChart = echarts.init(dom);
 	var app = {};
 	option = null;
-	var BJsheng=[];
 	var BJshi=[];
 	var BJche=[];
 	var geoCoordMap=[];
@@ -28,7 +27,6 @@ $(function(){
 		method: 'get',
 		async: false,
 		success: function (result) {
-			BJsheng = result.BJshi;
 			BJshi = result.BJshi;
 			BJche = result.BJche;
 			geoCoordMap = result.Target;
@@ -36,9 +34,6 @@ $(function(){
 	});
 	//北京
 	var BJobj = {};
-	for (var i = 0; i < BJsheng.length; i++) {
-		BJobj[BJshi[i]] = BJsheng[i];
-	}
 	var BJData = [];
 	for (var i = 0; i < BJche.length; i++) {
 		var arr = [];
@@ -214,8 +209,7 @@ $(function(){
 			}
 		},
 		series: series
-	};
-	;
+	};;
 	if (option && typeof option === "object") {
 		myChart.setOption(option, true);
 	}

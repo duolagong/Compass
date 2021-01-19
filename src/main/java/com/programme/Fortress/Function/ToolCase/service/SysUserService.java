@@ -6,7 +6,7 @@ import com.programme.Fortress.Function.ToolCase.entity.SysUser;
 import java.util.Map;
 
 public interface SysUserService {
-    String getUser();
+    String getUser(String cookie);
 
     ResultBean addUser(SysUser sysUser);
 
@@ -15,6 +15,4 @@ public interface SysUserService {
     ResultBean upDateUser(SysUser sysUser);
 
     Map alertPhoneInfor(String type);
-
-    boolean loginSystem(String userid,String password);
 }

@@ -5,4 +5,8 @@
     <select id="getDual" resultType="java.lang.Long">
         select SEQ_SYS_MESSAGE.nextval from DUAL
     </select>
+    
+    <select id="getType" resultType="String">
+        select type from bnk_sys_message where type_source=#{typeSource} and message_type =#{messageType}
+    </select>
 </mapper>

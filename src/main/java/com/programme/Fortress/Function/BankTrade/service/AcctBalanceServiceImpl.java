@@ -57,6 +57,7 @@ public class AcctBalanceServiceImpl implements AcctBalanceService {
                     .replaceAll("#ACCTID#", acctid);
             String retrunMsg = atomosb.getData(messageSql);
             List<BankAcctId> bankAcctIds = JSON.parseArray(retrunMsg, BankAcctId.class);
+            log.info("查询返回的账户信息[{}]",bankAcctIds);
             String message1032 = formatConService.makeMessage1032("", bankAcctIds.get(0).getAgentid(), bankAcctIds.get(0).getBranchid(), acctid, curcode, txdate);
             BankId bankId = bankIdMapper.selectById(agentid);
             String retrunMsg1032 = atomosb.visitBankAdapter(bankId.getBank()+"Adapter",message1032);

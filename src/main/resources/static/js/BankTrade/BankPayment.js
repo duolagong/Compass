@@ -166,7 +166,7 @@ function getbankPayment(){
                 }else if(value=="1"){
                     return '<h6 style="color: #ffb809">交易待查询</h6>';
                 }else if(value=="2"){
-                    return '<h6 style="color: #78cdff">交易同步中/h6>';
+                    return '<h6 style="color: #35a2ff">交易同步中</h6>';
                 }else {
                     return '<h6 style="color: #f44336">交易异常</h6>';
                 }

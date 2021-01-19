@@ -38,12 +38,10 @@ public class PayInterpose implements Serializable {
     /**
      * 提交人id
      */
-    @TableField(strategy = FieldStrategy.IGNORED)
-    private Integer submitId;
+    private String submitId;
     /**
      * 提交人
      */
-    @TableField(strategy = FieldStrategy.IGNORED)
     private String submitName;
     /**
      * 修改时间
@@ -52,4 +50,10 @@ public class PayInterpose implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
+
+    /**
+     * 用户前台过来的非表内数据
+     */
+    @TableField(exist = false)
+    private String[] agentids;
 }

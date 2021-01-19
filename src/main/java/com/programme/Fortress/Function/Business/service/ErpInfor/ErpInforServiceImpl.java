@@ -1,26 +1,18 @@
-package com.programme.Fortress.Function.Business.service;
+package com.programme.Fortress.Function.Business.service.ErpInfor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.programme.Fortress.Function.Business.dao.BankIdMapper;
 import com.programme.Fortress.Function.Business.dao.ErpInforMapper;
-import com.programme.Fortress.Function.Business.dao.NbkInforMapper;
 import com.programme.Fortress.Function.Business.entity.BankId;
-import com.programme.Fortress.Function.Business.entity.ErpInfor;
 import com.programme.Fortress.Function.Business.service.ErpInfor.ErpInforAsync;
-import com.programme.Fortress.Util.MyDateUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import feign.Feign;
+import com.programme.Fortress.Function.Business.service.ErpInfor.ErpInforService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 @Slf4j

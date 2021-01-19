@@ -101,7 +101,7 @@ function getRadarMap(nodes,links) {
             },
             lineStyle: {
                 normal: {
-                    color: '#ffffff'
+                    color: 'rgba(128, 128, 128, 0)' //隐藏掉中间的线
                 }
             }
         }
@@ -121,7 +121,7 @@ function getRadarMap(nodes,links) {
         title: {
             text: ''
         },
-        backgroundColor: "#ffffff",
+        backgroundColor: "",
         polar: {},
         radiusAxis: {
             show: false

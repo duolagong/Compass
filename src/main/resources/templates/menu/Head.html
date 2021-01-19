@@ -17,29 +17,29 @@
                     <h6><i class="fa fa-compass fa-spin fa-3x fa-fw" aria-hidden="true"></i></h6>O.Compass
                 </a>
                 <ul class="navbar-nav hk-navbar-content">
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a id="settings_toggle_btn" class="nav-link nav-link-hover" href="javascript:void(0);"><span class="feather-icon"><i data-feather="settings"></i></span></a>
-                    </li>
-                    <!--<li class="nav-item dropdown dropdown-authentication">
+                    </li>-->
+                    <li class="nav-item dropdown dropdown-authentication">
                         <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="media">
                                 <div class="media-img-wrap">
                                     <div class="avatar">
-                                        <img src="dist/img/avatar12.jpg" alt="user" class="avatar-img rounded-circle">
+                                        <img src="img/favicon.ico" alt="user" class="avatar-img rounded-circle">
                                     </div>
                                     <span class="badge badge-success badge-indicator"></span>
                                 </div>
                                 <div class="media-body">
-                                    <span>Madelyn Shane<i class="zmdi zmdi-chevron-down"></i></span>
+                                    <span><h6 th:text="${userInfo.userName}"></h6><i class="zmdi zmdi-chevron-down"></i></span>
                                 </div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
-                            <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
+                            <!--<a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
                             <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-card"></i><span>My balance</span></a>
-                            <a class="dropdown-item" href="inbox.html"><i class="dropdown-icon zmdi zmdi-email"></i><span>Inbox</span></a>
-                            <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-settings"></i><span>Settings</span></a>
-                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="inbox.html"><i class="dropdown-icon zmdi zmdi-email"></i><span>Inbox</span></a>-->
+                            <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-settings"></i><span>设置</span></a>
+                            <!--<div class="dropdown-divider"></div>
                             <div class="sub-dropdown-menu show-on-hover">
                                 <a href="#" class="dropdown-toggle dropdown-item no-caret"><i class="zmdi zmdi-check text-success"></i>Online</a>
                                 <div class="dropdown-menu open-left-side">
@@ -47,20 +47,20 @@
                                     <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-circle-o text-warning"></i><span>Busy</span></a>
                                     <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-minus-circle-outline text-danger"></i><span>Offline</span></a>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-power"></i><span>Log out</span></a>
+                            <a class="dropdown-item" href="/sysSafety/loginout"><i class="dropdown-icon zmdi zmdi-power"></i><span>登出系统</span></a>
                         </div>
-                    </li>-->
+                    </li>
                 </ul>
             </nav>
-            <form role="search" class="navbar-search">
+            <!--<form role="search" class="navbar-search">
                 <div class="position-relative">
                     <a href="javascript:void(0);" class="navbar-search-icon"><span class="feather-icon"><i data-feather="search"></i></span></a>
                     <input type="text" name="example-input1-group2" class="form-control" placeholder="Type here to Search">
                     <a id="navbar_search_close" class="navbar-search-close" href="#"><span class="feather-icon"><i data-feather="x"></i></span></a>
                 </div>
-            </form>
+            </form>-->
             <!-- /Top Navbar -->
 
             <!-- Vertical Nav -->
@@ -80,12 +80,15 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('Ecosphere','生态网监控')">生态网监控</a>
                                             </li>
-                                            <!--<li class="nav-item">
-                                                <a class="nav-link" href="/MxContent">合同接口</a>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" onclick="jumpPage('TrafficMonitor','访问量监控')">访问量监控</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/MxContent">前置机治理</a>
-                                            </li>-->
+                                                <a class="nav-link" href="#" onclick="jumpPage('SysMemory','内存监控')">内存量监控</a>
+                                            </li>
+                                            <li class="nav-item" hidden>
+                                                <a class="nav-link" href="#" onclick="jumpPage('Ecosphere','线程监控')">线程监控</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -98,8 +101,11 @@
                                 <ul id="dash_drp" class="nav flex-column collapse collapse-level-1">
                                     <li class="nav-item">
                                         <ul class="nav flex-column">
-                                            <li class="nav-item">
+                                            <!--<li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('FlowMap','当日汇款流向')">当日汇款流向</a>
+                                            </li>-->
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#" onclick="jumpPage('PaymentFlow','今日汇款流向')">今日汇款流向</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('TradeAnalysis','汇款时段监控')">汇款时段监控</a>
@@ -142,13 +148,13 @@
                                     <li class="nav-item">
                                         <ul class="nav flex-column">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#" onclick="jumpPage('PayInfor','支付通-汇款查询')">支付通汇款查询</a>
+                                                <a class="nav-link" href="#" onclick="jumpPage('PayInfor','支付通汇款查询')">支付通汇款查询</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#" onclick="jumpPage('PayInterpose','支付通-汇款干预')">支付通交易干预</a>
+                                                <a class="nav-link" href="#" onclick="jumpPage('PayInterpose','支付通交易干预')">支付通交易干预</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#" onclick="jumpPage('NoticeSend','支付通-结果重发')">支付通结果重发</a>
+                                                <a class="nav-link" href="#" onclick="jumpPage('NoticeSend','资管交易结果重发')">资管交易结果重发</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -165,9 +171,9 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('BankPayment','银企-汇款查询')">银企汇款查询</a>
                                             </li>
-                                            <!--<li class="nav-item">
+                                            <li class="nav-item" hidden>
                                                 <a class="nav-link" href="#" onclick="jumpPage('AcctBalance','银企-付款通知')">银企交易通知</a>
-                                            </li>-->
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -198,9 +204,9 @@
                                 <ul id="Components_drp" class="nav flex-column collapse collapse-level-1">
                                     <li class="nav-item">
                                         <ul class="nav flex-column">
-                                            <!--<li class="nav-item">
+                                            <li class="nav-item" hidden>
                                                 <a class="nav-link" href="#" onclick="jumpPage('PlanRule','系统单次任务')">系统单次任务</a>
-                                            </li>-->
+                                            </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('PlanRule','系统周期任务')">系统周期任务</a>
                                             </li>
@@ -220,11 +226,11 @@
                                                 <a class="nav-link" href="#" onclick="jumpPage('SysMessage','报文模板')">报文模板</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#" onclick="jumpPage('FormatCon','格式转换')">格式转换</a>
+                                                <a class="nav-link" href="#" onclick="jumpPage('FormatCon','转换工具')">转换工具</a>
                                             </li>
-                                            <!--<li class="nav-item">
+                                            <li class="nav-item" hidden>
                                                 <a class="nav-link" href="#" onclick="jumpPage('PostMan','消息发送器')">消息发送器</a>
-                                            </li>-->
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -243,9 +249,9 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('SysCurrency','币种维护')">币种维护</a>
                                             </li>
-                                            <!--<li class="nav-item">
+                                            <li class="nav-item" hidden>
                                                 <a class="nav-link" href="#" onclick="jumpPage('CompanyNum','电子回单')">电子回单</a>
-                                            </li>-->
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -258,11 +264,14 @@
                                 <ul id="forms_drp" class="nav flex-column collapse collapse-level-1">
                                     <li class="nav-item">
                                         <ul class="nav flex-column">
-                                            <li class="nav-item">
+                                            <li class="nav-item" th:if="${userInfo.userType} ne '3'">
                                                 <a class="nav-link" href="#" onclick="jumpPage('SysUser','用户维护')">用户维护</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#" onclick="jumpPage('AlertRule','预警规则')">预警规则</a>
+                                            </li>
+                                            <li class="nav-item" hidden>
+                                                <a class="nav-link" href="#" onclick="jumpPage('SysUser','注册复核')">注册复核</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -276,37 +285,37 @@
                         </div>
                         <ul class="navbar-nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span class="feather-icon"><i data-feather="mail"></i></span>
-                                    <span class="nav-link-text">短信平台</span>
+                                <a class="nav-link" href="http://10.10.10.110:6001/console/">
+                                    <span class="feather-icon"><i data-feather="airplay"></i></span>
+                                    <span class="nav-link-text">银企平台</span>
                                   <!--  <span class="badge badge-sm badge-danger badge-pill">v 1.0</span>link-with-badge-->
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <span class="feather-icon"><i data-feather="message-circle"></i></span>
-                                    <span class="nav-link-text">微信平台</span>
+                                    <span class="feather-icon"><i data-feather="twitter"></i></span>
+                                    <span class="nav-link-text">业务大厅</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="http://10.10.10.43:8761/" target = "_blank">
+                                <a class="nav-link" href="http://localhost:8761/" target = "_blank">
                                     <span class="feather-icon"><i data-feather="send"></i></span>
                                     <span class="nav-link-text">注册中心</span>
                                     <!--  <span class="badge badge-sm badge-danger badge-pill">v 1.0</span>link-with-badge-->
                                 </a>
                             </li>
-                            <!--<li class="nav-item">
+                            <li class="nav-item" hidden>
                                 <a class="nav-link" href="http://10.10.10.43:8761/" target = "_blank">
                                     <span class="feather-icon"><i data-feather="server"></i></span>
-                                    <span class="nav-link-text">H-OSB控制台</span>
+                                    <span class="nav-link-text">短信平台</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" hidden>
                                 <a class="nav-link" href="http://10.10.10.43:8761/" target = "_blank">
                                     <span class="feather-icon"><i data-feather="shield"></i></span>
-                                    <span class="nav-link-text">E-OSB控制台</span>
+                                    <span class="nav-link-text">微信平台</span>
                                 </a>
-                            </li>-->
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -315,7 +324,7 @@
             <!-- /Vertical Nav -->
 
             <!-- Setting Panel -->
-            <div class="hk-settings-panel">
+            <!--<div class="hk-settings-panel">
                 <div class="nicescroll-bar position-relative">
                     <div class="settings-panel-wrap">
                         <div class="settings-panel-head">
@@ -344,9 +353,9 @@
                         <button id="reset_settings" class="btn btn-primary btn-block btn-reset mt-30">重置</button>
                     </div>
                 </div>
-<!--                <img class="d-none" src="dist/img/logo-light.png" alt="brand" />-->
-<!--                <img class="d-none" src="dist/img/logo-dark.png" alt="brand" />-->
-            </div>
+                <img class="d-none" src="dist/img/logo-light.png" alt="brand" />
+                <img class="d-none" src="dist/img/logo-dark.png" alt="brand" />
+            </div>-->
             <th:block th:replace="${div}" />
         </div>
     </body>
