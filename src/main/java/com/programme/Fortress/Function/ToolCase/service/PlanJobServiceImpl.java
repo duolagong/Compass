@@ -5,14 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.programme.Fortress.Function.ToolCase.entity.PlanJob;
 import com.programme.Fortress.Function.ToolCase.entity.ResultBean;
+import com.programme.Fortress.Function.ToolCase.entity.SysUser;
 import com.programme.Fortress.Other.Exception.ResultUtil;
 import com.programme.Fortress.Task.JobOperateEnum;
 import com.programme.Fortress.Function.ToolCase.dao.PlanJobMapper;
 import com.programme.Fortress.Task.service.QuartzService;
+import com.programme.Fortress.Util.Redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.CronExpression;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sun.rmi.runtime.Log;
@@ -29,20 +32,26 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
     private QuartzService quartzService;
     @Autowired
     private PlanJobMapper planJobMapper;
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Value(value = "${USER_KEY_PREFIX}")
+    private String USER_KEY_PREFIX;
 
     @Override
-    public ResultBean add(PlanJob planJob) {
+    public ResultBean add(PlanJob planJob, String cookie) {
         try {
-            if(!CronExpression.isValidExpression(planJob.getCronExpression())) return ResultUtil.fail("规则填写不合规");
+            if (!CronExpression.isValidExpression(planJob.getCronExpression())) return ResultUtil.fail("规则填写不合规");
+            SysUser sysUser = (SysUser) redisUtil.get(USER_KEY_PREFIX + cookie);
             planJob.setId(planJobMapper.getDual());
             planJob.setStatus(0);
             planJob.setDeleteFlag(0);
-            planJob.setCreatorId(1);
-            planJob.setCreatorName("System");
+            planJob.setCreatorId(sysUser.getId().intValue());
+            planJob.setCreatorName(sysUser.getUserName());
             planJobMapper.insert(planJob);
-            return ResultUtil.success(null,"新增周期任务成功");
+            return ResultUtil.success(null, "新增周期任务成功");
         } catch (Exception e) {
-            log.error("新增周期任务异常",e);
+            log.error("新增周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }
@@ -54,9 +63,9 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
             job.setStatus(1);
             this.updateById(job);
             quartzService.operateJob(JobOperateEnum.START, job);
-            return ResultUtil.success(null,job.getJobName()+"启动成功");
+            return ResultUtil.success(null, job.getJobName() + "启动成功");
         } catch (Exception e) {
-            log.error("启动周期任务异常",e);
+            log.error("启动周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }
@@ -68,9 +77,9 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
             job.setStatus(0);
             this.updateById(job);
             quartzService.operateJob(JobOperateEnum.PAUSE, job);
-            return ResultUtil.success(null,job.getJobName()+"暂停成功");
+            return ResultUtil.success(null, job.getJobName() + "暂停成功");
         } catch (Exception e) {
-            log.error("暂停周期任务异常",e);
+            log.error("暂停周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }
@@ -81,17 +90,17 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
             PlanJob job = this.getById(id);
             this.removeById(id);
             quartzService.operateJob(JobOperateEnum.DELETE, job);
-            return ResultUtil.success(null,job.getJobName()+"删除成功");
+            return ResultUtil.success(null, job.getJobName() + "删除成功");
         } catch (Exception e) {
-            log.error("删除周期任务异常",e);
+            log.error("删除周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }
 
     @Override
-    public ResultBean update(PlanJob planJob){
+    public ResultBean update(PlanJob planJob) {
         try {
-            if(!CronExpression.isValidExpression(planJob.getCronExpression())) return ResultUtil.fail("规则填写不合规");
+            if (!CronExpression.isValidExpression(planJob.getCronExpression())) return ResultUtil.fail("规则填写不合规");
             PlanJob job = planJobMapper.selectById(planJob.getId());
             job.setJobName(planJob.getJobName());
             job.setCronExpression(planJob.getCronExpression());
@@ -99,9 +108,9 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
             job.setMethodName(planJob.getMethodName());
             planJobMapper.updateById(job);
             quartzService.operateJob(JobOperateEnum.UPDATE, job);
-            return ResultUtil.success(null,planJob.getJobName()+"修改成功");
+            return ResultUtil.success(null, planJob.getJobName() + "修改成功");
         } catch (Exception e) {
-            log.error("修改周期任务异常",e);
+            log.error("修改周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }
@@ -110,14 +119,14 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
     public ResultBean startAllJob() {
         try {
             List<PlanJob> planJobs = planJobMapper.selectList(new QueryWrapper<PlanJob>().eq("status", 0));//new QueryWrapper<PayInfor>().eq("to_char(trandate,'yyyy-MM-dd')",nowDate)
-            for (PlanJob planJob:planJobs){
+            for (PlanJob planJob : planJobs) {
                 planJob.setStatus(1);
-                planJobMapper.update(planJob,new QueryWrapper<PlanJob>().eq("id",planJob.getId()));
+                planJobMapper.update(planJob, new QueryWrapper<PlanJob>().eq("id", planJob.getId()));
                 quartzService.operateJob(JobOperateEnum.START, planJob);
             }
-            return ResultUtil.success(null,"周期任务已全部启用");
+            return ResultUtil.success(null, "周期任务已全部启用");
         } catch (SchedulerException e) {
-            log.error("全部启用周期任务异常",e);
+            log.error("全部启用周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }
@@ -126,14 +135,14 @@ public class PlanJobServiceImpl extends ServiceImpl<PlanJobMapper, PlanJob> impl
     public ResultBean pauseAllJob() {
         try {
             List<PlanJob> planJobs = planJobMapper.selectList(new QueryWrapper<PlanJob>().eq("status", 1));
-            for (PlanJob planJob:planJobs){
+            for (PlanJob planJob : planJobs) {
                 planJob.setStatus(0);
-                planJobMapper.update(planJob,new QueryWrapper<PlanJob>().eq("id",planJob.getId()));
+                planJobMapper.update(planJob, new QueryWrapper<PlanJob>().eq("id", planJob.getId()));
             }
             quartzService.pauseAllJob();
-            return ResultUtil.success(null,"周期任务已全部停用");
+            return ResultUtil.success(null, "周期任务已全部停用");
         } catch (SchedulerException e) {
-            log.error("全部停用周期任务异常",e);
+            log.error("全部停用周期任务异常", e);
             return ResultUtil.fail(e.getMessage());
         }
     }

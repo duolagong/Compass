@@ -133,10 +133,10 @@ public class PayInterposeServiceImpl implements PayInterposeService {
         PayInfor payInfor = payInforMapper.selectById(ordernum);
         if ("1".equals(payInfor.getPayprocess())) {
             if ("2000".equals(payInfor.getTxcode()) && StringUtils.isEmpty(payInfor.getNbkcode())) {
-                return ResultUtil.fail("状态停滞在核心系统!");
+                return ResultUtil.fail("状态停滞在资管系统!");
                 //return payInterposeContext.confirmIntermediateState(1, payInfor);
             } else if ("Z01".equals(payInfor.getAgentid()) || "W01".equals(payInfor.getAgentid())) {
-                return ResultUtil.fail("状态停滞在资管系统!");
+                return ResultUtil.fail("状态停滞在核心系统!");
                 //return payInterposeContext.confirmIntermediateState(2, payInfor);
             } else {
                 return ResultUtil.fail("状态停滞在核心OSB!");

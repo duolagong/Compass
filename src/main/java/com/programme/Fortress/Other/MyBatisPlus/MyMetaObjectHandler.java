@@ -13,8 +13,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         System.out.println("自动新增");
         setFieldValByName("createdTime", LocalDateTime.now(), metaObject);
         setFieldValByName("updatedTime", LocalDateTime.now(), metaObject);
-        setFieldValByName("creatorId", 1, metaObject);
-        setFieldValByName("creatorName", "SYSTEM", metaObject);
         setFieldValByName("deleteFlag", 0, metaObject);
     }
 

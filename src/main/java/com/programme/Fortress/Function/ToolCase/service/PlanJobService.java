@@ -12,7 +12,7 @@ public interface PlanJobService extends IService<PlanJob> {
     /**
      * 新增定时任务
      */
-    ResultBean add(PlanJob planJob);
+    ResultBean add(PlanJob planJob,String cookie);
 
     /**
      * 启动定时任务
